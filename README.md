@@ -52,7 +52,7 @@ The six standalone Forge plugins have been merged into ForgeCore, keeping the mo
 - **forge-announcer** — full announcer engine merged (`/announce`): per-announcement intervals, chat/action-bar/boss-bar/title delivery, sequential/random rotation, broadcast-by-id.
 - **forge-chat** — channels (global/local/staff via `/ch`, `/g`, `/l`), @mentions, anti-spam, word filter, permission-group formatting, hover cards, per-channel slowmode merged; `/msg` was upgraded in place with group formatting and PM templates.
 - **forge-stack** — entity, item and XP-orb stacking plus spawner stacking (`/stack`) merged wholesale.
-- **forge-items** — the entire custom-item system merged (`/fitems`): YAML items, 25 activators, 25 action verbs, mana, item levels/XP, drop tables, sets, recipes, in-game GUI editor and browser GUI.
+- **forge-items** — the entire custom-item system merged (`/fitems`): YAML items, 25 activators, 25 action verbs, mana, item levels/XP, drop tables, sets, recipes, in-game GUI editor and in-game item browser GUI.
 
 ### Core (1)
 
