@@ -93,9 +93,12 @@ public abstract class ForgeGui implements InventoryHolder {
             int slot = entry.getKey();
             if (slot < 54) {
                 inv.setItem(slot, entry.getValue().stack());
+            } else if (slot < 81) {
+                // Raw 54-80: player storage -> PlayerInventory 9-35.
+                player.getInventory().setItem(slot - 45, entry.getValue().stack());
             } else {
-                // Raw slots 54-89 map to the player's own inventory view slots.
-                player.getInventory().setItem(slot - 54, entry.getValue().stack());
+                // Raw 81-89: hotbar -> PlayerInventory 0-8.
+                player.getInventory().setItem(slot - 81, entry.getValue().stack());
             }
         }
         this.inventory = inv;
