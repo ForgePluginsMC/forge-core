@@ -105,3 +105,10 @@ guild-war-minutes: 10
 guild-war-challenge-seconds: 300
 # Prize taken from the loser's guild bank (capped by their balance).
 guild-war-prize: 500.0
+
+# ForgeCore UI resource pack.
+# Set to a publicly accessible URL hosting the resourcepack.zip.
+# Players can get it with /resourcepack.
+resourcepack-url: ""
+# Optional SHA-1 hash of the pack file (for integrity verification).
+resourcepack-hash: ""

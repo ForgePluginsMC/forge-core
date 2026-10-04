@@ -1,0 +1,9 @@
+ForgeCore UI Glyphs (use with font 'minecraft:forge_ui'):
+  U+E000 (arrow_left)
+  U+E001 (arrow_right)
+  U+E002 (dot_filled)
+  U+E003 (dot_empty)
+  U+E004 (check)
+  U+E005 (cross)
+  U+E006 (star)
+  U+E007 (divider)

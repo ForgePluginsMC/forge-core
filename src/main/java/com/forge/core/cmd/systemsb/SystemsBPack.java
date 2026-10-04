@@ -41,6 +41,7 @@ public final class SystemsBPack {
         commands.add(new CounterCommand(plugin));
         commands.add(new ViewrangeCommand(plugin));
         commands.add(new MotdCommand(plugin));
+        commands.add(new ResourcepackCommand(plugin));
         commands.add(new RulesCommand(plugin));
         return commands;
     }

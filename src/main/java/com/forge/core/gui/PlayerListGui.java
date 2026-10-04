@@ -19,52 +19,38 @@ import org.jspecify.annotations.Nullable;
  * Online player list: click a head for quick actions.
  */
 @NullMarked
-public final class PlayerListGui extends ForgeGui {
+public final class PlayerListGui extends WebGui {
     private static final MiniMessage MM = MiniMessage.miniMessage();
     private final ForgeCore plugin;
-    private final ForgeGui parent;
+    private final WebGui parent;
 
-    public PlayerListGui(ForgeCore plugin, ForgeGui parent) {
+    public PlayerListGui(ForgeCore plugin, WebGui parent) {
         this.plugin = plugin;
         this.parent = parent;
     }
 
     @Override
-    protected Component title() {
-        return MM.deserialize("<aqua><bold>Online Players");
+    protected List<String> breadcrumb() {
+        return List.of("Menu", "Players");
     }
 
     @Override
-    protected int size() {
-        return 54;
-    }
-
-    @Override
-    protected @Nullable ForgeGui parent() {
+    protected @Nullable WebGui parent() {
         return parent;
     }
 
     @Override
-    protected void build(Player viewer) {
+    protected void buildContent(Player viewer) {
         List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
         players.sort(Comparator.comparing(Player::getName, String.CASE_INSENSITIVE_ORDER));
 
-        int[] slots = gridSlots();
+        int[] slots = CONTENT_SLOTS;
         for (int i = 0; i < players.size() && i < slots.length; i++) {
             Player target = players.get(i);
             set(slots[i], playerItem(viewer, target));
         }
     }
 
-    private static int[] gridSlots() {
-        List<Integer> slots = new ArrayList<>();
-        for (int row = 0; row < 5; row++) {
-            for (int col = 0; col < 9; col++) {
-                slots.add(row * 9 + col);
-            }
-        }
-        return slots.stream().mapToInt(Integer::intValue).toArray();
-    }
 
     private GuiItem playerItem(Player viewer, Player target) {
         ItemStack head = new ItemStack(Material.PLAYER_HEAD);

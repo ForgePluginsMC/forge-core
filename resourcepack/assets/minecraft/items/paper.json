@@ -1,0 +1,187 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data",
+    "cases": [
+      {
+        "when": "forge_button_primary",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_button_primary"
+        }
+      },
+      {
+        "when": "forge_button_secondary",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_button_secondary"
+        }
+      },
+      {
+        "when": "forge_button_danger",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_button_danger"
+        }
+      },
+      {
+        "when": "forge_button_success",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_button_success"
+        }
+      },
+      {
+        "when": "forge_button_back",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_button_back"
+        }
+      },
+      {
+        "when": "forge_arrow_left",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_arrow_left"
+        }
+      },
+      {
+        "when": "forge_arrow_right",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_arrow_right"
+        }
+      },
+      {
+        "when": "forge_dot_active",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_dot_active"
+        }
+      },
+      {
+        "when": "forge_dot_inactive",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_dot_inactive"
+        }
+      },
+      {
+        "when": "forge_status_online",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_status_online"
+        }
+      },
+      {
+        "when": "forge_status_offline",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_status_offline"
+        }
+      },
+      {
+        "when": "forge_status_busy",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_status_busy"
+        }
+      },
+      {
+        "when": "forge_status_away",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_status_away"
+        }
+      },
+      {
+        "when": "forge_icon_teleport",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_icon_teleport"
+        }
+      },
+      {
+        "when": "forge_icon_moderation",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_icon_moderation"
+        }
+      },
+      {
+        "when": "forge_icon_economy",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_icon_economy"
+        }
+      },
+      {
+        "when": "forge_icon_tools",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_icon_tools"
+        }
+      },
+      {
+        "when": "forge_icon_guild",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_icon_guild"
+        }
+      },
+      {
+        "when": "forge_icon_quest",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_icon_quest"
+        }
+      },
+      {
+        "when": "forge_icon_permission",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_icon_permission"
+        }
+      },
+      {
+        "when": "forge_icon_npc",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_icon_npc"
+        }
+      },
+      {
+        "when": "forge_icon_warp",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_icon_warp"
+        }
+      },
+      {
+        "when": "forge_icon_home",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_icon_home"
+        }
+      },
+      {
+        "when": "forge_icon_kit",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_icon_kit"
+        }
+      },
+      {
+        "when": "forge_icon_mail",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_icon_mail"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:item/paper"
+    }
+  }
+}

@@ -17,37 +17,32 @@ import org.jspecify.annotations.Nullable;
  * Mail inbox: click a message to read it, buttons to clear and compose.
  */
 @NullMarked
-public final class MailGui extends ForgeGui {
+public final class MailGui extends WebGui {
     private static final MiniMessage MM = MiniMessage.miniMessage();
     private final ForgeCore plugin;
-    private final ForgeGui parent;
+    private final WebGui parent;
 
-    public MailGui(ForgeCore plugin, ForgeGui parent) {
+    public MailGui(ForgeCore plugin, WebGui parent) {
         this.plugin = plugin;
         this.parent = parent;
     }
 
     @Override
-    protected Component title() {
-        return MM.deserialize("<yellow><bold>Mail Inbox");
+    protected List<String> breadcrumb() {
+        return List.of("Menu", "Mail");
     }
 
     @Override
-    protected int size() {
-        return 54;
-    }
-
-    @Override
-    protected @Nullable ForgeGui parent() {
+    protected @Nullable WebGui parent() {
         return parent;
     }
 
     @Override
-    protected void build(Player viewer) {
+    protected void buildContent(Player viewer) {
         MailManager mail = PlayerBState.mail();
         List<MailManager.Mail> messages = mail.read(viewer.getUniqueId());
 
-        int[] slots = gridSlots();
+        int[] slots = CONTENT_SLOTS;
         for (int i = 0; i < messages.size() && i < slots.length; i++) {
             MailManager.Mail msg = messages.get(i);
             String preview = msg.message().length() > 30
@@ -93,13 +88,4 @@ public final class MailGui extends ForgeGui {
                 .action(p -> runCommand(p, "mail clear")));
     }
 
-    private static int[] gridSlots() {
-        List<Integer> slots = new ArrayList<>();
-        for (int row = 0; row < 5; row++) {
-            for (int col = 0; col < 9; col++) {
-                slots.add(row * 9 + col);
-            }
-        }
-        return slots.stream().mapToInt(Integer::intValue).toArray();
-    }
 }

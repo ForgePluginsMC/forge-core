@@ -17,37 +17,32 @@ import org.jspecify.annotations.Nullable;
  * Kit browser: preview contents, click to claim.
  */
 @NullMarked
-public final class KitGui extends ForgeGui {
+public final class KitGui extends WebGui {
     private static final MiniMessage MM = MiniMessage.miniMessage();
     private final ForgeCore plugin;
-    private final ForgeGui parent;
+    private final WebGui parent;
 
-    public KitGui(ForgeCore plugin, ForgeGui parent) {
+    public KitGui(ForgeCore plugin, WebGui parent) {
         this.plugin = plugin;
         this.parent = parent;
     }
 
     @Override
-    protected Component title() {
-        return MM.deserialize("<gold><bold>Kits");
+    protected List<String> breadcrumb() {
+        return List.of("Menu", "Kits");
     }
 
     @Override
-    protected int size() {
-        return 54;
-    }
-
-    @Override
-    protected @Nullable ForgeGui parent() {
+    protected @Nullable WebGui parent() {
         return parent;
     }
 
     @Override
-    protected void build(Player viewer) {
+    protected void buildContent(Player viewer) {
         List<String> names = new ArrayList<>(plugin.kits().names());
         names.sort(String.CASE_INSENSITIVE_ORDER);
 
-        int[] slots = gridSlots();
+        int[] slots = CONTENT_SLOTS;
         for (int i = 0; i < names.size() && i < slots.length; i++) {
             String name = names.get(i);
             KitManager.Kit kit = plugin.kits().get(name);
@@ -118,13 +113,4 @@ public final class KitGui extends ForgeGui {
         return sb.toString();
     }
 
-    private static int[] gridSlots() {
-        List<Integer> slots = new ArrayList<>();
-        for (int row = 0; row < 5; row++) {
-            for (int col = 0; col < 9; col++) {
-                slots.add(row * 9 + col);
-            }
-        }
-        return slots.stream().mapToInt(Integer::intValue).toArray();
-    }
 }

@@ -19,40 +19,35 @@ import org.jspecify.annotations.Nullable;
  * Ban list: click a ban to unban.
  */
 @NullMarked
-public final class BanListGui extends ForgeGui {
+public final class BanListGui extends WebGui {
     private static final MiniMessage MM = MiniMessage.miniMessage();
     private static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
             .withZone(ZoneId.systemDefault());
     private final ForgeCore plugin;
-    private final ForgeGui parent;
+    private final WebGui parent;
 
-    public BanListGui(ForgeCore plugin, ForgeGui parent) {
+    public BanListGui(ForgeCore plugin, WebGui parent) {
         this.plugin = plugin;
         this.parent = parent;
     }
 
     @Override
-    protected Component title() {
-        return MM.deserialize("<red><bold>Ban List");
+    protected List<String> breadcrumb() {
+        return List.of("Menu", "Moderation", "Bans");
     }
 
     @Override
-    protected int size() {
-        return 54;
-    }
-
-    @Override
-    protected @Nullable ForgeGui parent() {
+    protected @Nullable WebGui parent() {
         return parent;
     }
 
     @Override
-    protected void build(Player viewer) {
+    protected void buildContent(Player viewer) {
         List<BanManager.BanInfo> bans = new ArrayList<>(plugin.bans().all());
         // Filter out expired temp bans.
         bans.removeIf(BanManager.BanInfo::expired);
 
-        int[] slots = gridSlots();
+        int[] slots = CONTENT_SLOTS;
         for (int i = 0; i < bans.size() && i < slots.length; i++) {
             BanManager.BanInfo ban = bans.get(i);
             List<String> lore = new ArrayList<>();
@@ -79,13 +74,4 @@ public final class BanListGui extends ForgeGui {
         }
     }
 
-    private static int[] gridSlots() {
-        List<Integer> slots = new ArrayList<>();
-        for (int row = 0; row < 5; row++) {
-            for (int col = 0; col < 9; col++) {
-                slots.add(row * 9 + col);
-            }
-        }
-        return slots.stream().mapToInt(Integer::intValue).toArray();
-    }
 }

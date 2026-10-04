@@ -17,33 +17,28 @@ import org.jspecify.annotations.Nullable;
  * Guild dashboard: info, members, bank, claims, war status.
  */
 @NullMarked
-public final class GuildGui extends ForgeGui {
+public final class GuildGui extends WebGui {
     private static final MiniMessage MM = MiniMessage.miniMessage();
     private final ForgeCore plugin;
-    private final ForgeGui parent;
+    private final WebGui parent;
 
-    public GuildGui(ForgeCore plugin, ForgeGui parent) {
+    public GuildGui(ForgeCore plugin, WebGui parent) {
         this.plugin = plugin;
         this.parent = parent;
     }
 
     @Override
-    protected Component title() {
-        return MM.deserialize("<yellow><bold>Guild");
+    protected List<String> breadcrumb() {
+        return List.of("Menu", "Guilds");
     }
 
     @Override
-    protected int size() {
-        return 27;
-    }
-
-    @Override
-    protected @Nullable ForgeGui parent() {
+    protected @Nullable WebGui parent() {
         return parent;
     }
 
     @Override
-    protected void build(Player viewer) {
+    protected void buildContent(Player viewer) {
         Guild guild = plugin.guilds().guildOf(viewer);
         if (guild == null) {
             set(11, GuiItem.of(Material.SHIELD)

@@ -16,37 +16,32 @@ import org.jspecify.annotations.Nullable;
  * Permission group browser: click a group for details and actions.
  */
 @NullMarked
-public final class PermissionGui extends ForgeGui {
+public final class PermissionGui extends WebGui {
     private static final MiniMessage MM = MiniMessage.miniMessage();
     private final ForgeCore plugin;
-    private final ForgeGui parent;
+    private final WebGui parent;
 
-    public PermissionGui(ForgeCore plugin, ForgeGui parent) {
+    public PermissionGui(ForgeCore plugin, WebGui parent) {
         this.plugin = plugin;
         this.parent = parent;
     }
 
     @Override
-    protected Component title() {
-        return MM.deserialize("<blue><bold>Permission Groups");
+    protected List<String> breadcrumb() {
+        return List.of("Menu", "Permissions");
     }
 
     @Override
-    protected int size() {
-        return 54;
-    }
-
-    @Override
-    protected @Nullable ForgeGui parent() {
+    protected @Nullable WebGui parent() {
         return parent;
     }
 
     @Override
-    protected void build(Player viewer) {
+    protected void buildContent(Player viewer) {
         List<String> names = new ArrayList<>(plugin.permissions().groups().groupNames());
         names.sort(String.CASE_INSENSITIVE_ORDER);
 
-        int[] slots = gridSlots();
+        int[] slots = CONTENT_SLOTS;
         for (int i = 0; i < names.size() && i < slots.length; i++) {
             String name = names.get(i);
             Group group = plugin.permissions().groups().getGroup(name);
@@ -71,13 +66,4 @@ public final class PermissionGui extends ForgeGui {
                 .action(p -> runCommandWithInput(p, "Type the group name:", "group create")));
     }
 
-    private static int[] gridSlots() {
-        List<Integer> slots = new ArrayList<>();
-        for (int row = 0; row < 5; row++) {
-            for (int col = 0; col < 9; col++) {
-                slots.add(row * 9 + col);
-            }
-        }
-        return slots.stream().mapToInt(Integer::intValue).toArray();
-    }
 }

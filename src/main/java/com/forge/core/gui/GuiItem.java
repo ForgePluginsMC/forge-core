@@ -56,6 +56,40 @@ public final class GuiItem {
         return this;
     }
 
+    /**
+     * Set a custom model data key for resource pack textures.
+     *
+     * @param key the string key matching a case in the pack's item definition
+     */
+    public GuiItem model(String key) {
+        ItemMeta meta = stack.getItemMeta();
+        var cmd = meta.getCustomModelDataComponent();
+        cmd.setStrings(List.of(key));
+        meta.setCustomModelDataComponent(cmd);
+        stack.setItemMeta(meta);
+        return this;
+    }
+
+    /**
+     * Create a web-style card item: icon with title and description.
+     *
+     * @param icon the ForgeIcons key for the item texture
+     * @param title MiniMessage title
+     * @param description MiniMessage description lines
+     */
+    public static GuiItem card(String icon, String title, String... description) {
+        List<String> lore = new ArrayList<>();
+        for (String line : description) {
+            lore.add("<gray>" + line);
+        }
+        lore.add("");
+        lore.add("<green>Click to open");
+        return GuiItem.of(Material.PAPER)
+                .model(icon)
+                .name(title)
+                .lore(lore);
+    }
+
     /** Copy an existing ItemStack (e.g. player head) into a GuiItem. */
     public static GuiItem from(ItemStack stack) {
         GuiItem item = new GuiItem(stack.getType());

@@ -16,37 +16,32 @@ import org.jspecify.annotations.Nullable;
  * Warp browser: click a warp to teleport.
  */
 @NullMarked
-public final class WarpGui extends ForgeGui {
+public final class WarpGui extends WebGui {
     private static final MiniMessage MM = MiniMessage.miniMessage();
     private final ForgeCore plugin;
-    private final ForgeGui parent;
+    private final WebGui parent;
 
-    public WarpGui(ForgeCore plugin, ForgeGui parent) {
+    public WarpGui(ForgeCore plugin, WebGui parent) {
         this.plugin = plugin;
         this.parent = parent;
     }
 
     @Override
-    protected Component title() {
-        return MM.deserialize("<aqua><bold>Warps");
+    protected List<String> breadcrumb() {
+        return List.of("Menu", "Teleport", "Warps");
     }
 
     @Override
-    protected int size() {
-        return 54;
-    }
-
-    @Override
-    protected @Nullable ForgeGui parent() {
+    protected @Nullable WebGui parent() {
         return parent;
     }
 
     @Override
-    protected void build(Player viewer) {
+    protected void buildContent(Player viewer) {
         List<String> warps = new ArrayList<>(plugin.warps().names());
         warps.sort(String.CASE_INSENSITIVE_ORDER);
 
-        int[] slots = gridSlots();
+        int[] slots = CONTENT_SLOTS;
         for (int i = 0; i < warps.size() && i < slots.length; i++) {
             String warp = warps.get(i);
             Location loc = plugin.warps().get(warp);
@@ -69,13 +64,4 @@ public final class WarpGui extends ForgeGui {
                 .action(p -> runCommandWithInput(p, "Type the warp name:", "setwarp")));
     }
 
-    private static int[] gridSlots() {
-        List<Integer> slots = new ArrayList<>();
-        for (int row = 0; row < 5; row++) {
-            for (int col = 0; col < 9; col++) {
-                slots.add(row * 9 + col);
-            }
-        }
-        return slots.stream().mapToInt(Integer::intValue).toArray();
-    }
 }

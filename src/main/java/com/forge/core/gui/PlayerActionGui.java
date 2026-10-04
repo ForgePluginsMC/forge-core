@@ -2,6 +2,7 @@ package com.forge.core.gui;
 
 import com.forge.core.ForgeCore;
 import com.forge.core.util.Text;
+import java.util.List;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
@@ -13,35 +14,30 @@ import org.jspecify.annotations.Nullable;
  * Quick actions for a single player: teleport, moderate, economy.
  */
 @NullMarked
-public final class PlayerActionGui extends ForgeGui {
+public final class PlayerActionGui extends WebGui {
     private static final MiniMessage MM = MiniMessage.miniMessage();
     private final ForgeCore plugin;
     private final Player target;
-    private final ForgeGui parent;
+    private final WebGui parent;
 
-    public PlayerActionGui(ForgeCore plugin, Player target, ForgeGui parent) {
+    public PlayerActionGui(ForgeCore plugin, Player target, WebGui parent) {
         this.plugin = plugin;
         this.target = target;
         this.parent = parent;
     }
 
     @Override
-    protected Component title() {
-        return MM.deserialize("<aqua><bold>" + Text.escape(target.getName()));
+    protected List<String> breadcrumb() {
+        return List.of("Menu", "Players", "Actions");
     }
 
     @Override
-    protected int size() {
-        return 27;
-    }
-
-    @Override
-    protected @Nullable ForgeGui parent() {
+    protected @Nullable WebGui parent() {
         return parent;
     }
 
     @Override
-    protected void build(Player viewer) {
+    protected void buildContent(Player viewer) {
         String name = target.getName();
         boolean self = viewer.getUniqueId().equals(target.getUniqueId());
 
