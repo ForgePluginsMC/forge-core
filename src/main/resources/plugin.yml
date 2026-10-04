@@ -4,4 +4,4 @@ main: com.forge.core.ForgeCore
 api-version: '26.3'
 author: Forge
 description: All-in-one server core — teleportation, moderation, economy, player utilities, world admin and server systems.
-softdepend: [PlaceholderAPI, Vault]
+softdepend: [PlaceholderAPI]
