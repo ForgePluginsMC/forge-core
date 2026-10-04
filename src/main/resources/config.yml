@@ -41,15 +41,35 @@ maintenance-bypass: []
 # Dynamic sign refresh interval in seconds.
 dsign-interval-seconds: 30
 
-# Animated tablist.
+# Animated tablist (merged from forge-tablist).
+# Each header/footer frame is a LIST of MiniMessage lines.
+# Placeholders: %player% %online% %max% %tps% plus %player_name%,
+# %forgecore_balance%, %forgecore_playtime%, %forgecore_nick%, %forgecore_rank%.
 tablist:
   header-frames:
-    - "<gradient:#ff7b2e:#ffb347><bold>ForgeCore</bold></gradient>"
-    - "<gradient:#ffb347:#ff7b2e><bold>ForgeCore</bold></gradient>"
+    - - "<gradient:#ff7b2e:#ffb347><bold>ForgeCore</bold></gradient>"
+      - "<gray>Welcome back, <white>%player%</white><gray>!"
+    - - "<gradient:#ffb347:#ff7b2e><bold>ForgeCore</bold></gradient>"
+      - "<gray><white>%online%</white> online <dark_gray>|</dark_gray> TPS <green>%tps%</green>"
   footer-frames:
-    - "<gray>playtime: %forgecore_playtime%  |  balance: %forgecore_balance%</gray>"
+    - - "<gray>playtime: <white>%forgecore_playtime%</white>  |  balance: <white>%forgecore_balance%</white>"
+      - "<dark_gray>━━━━━━━━━━━━━━━"
   # Ticks between frame advances (100 = 5 seconds).
   interval-ticks: 100
+  # Tab-list entry names. First matching permission wins; "" matches everyone.
+  # Prefix + nick + suffix are parsed as ONE MiniMessage string.
+  groups:
+    - permission: ""
+      prefix: "<gray>"
+      suffix: "</gray>"
+  # Animated server-list MOTD frames (each frame = list of lines).
+  motd-frames:
+    - - "<gradient:#ff7b2e:#ffb347><bold>ForgeCore</bold></gradient>"
+      - "<gray>A ForgePlugins server"
+  # Seconds between MOTD frame changes.
+  motd-interval-seconds: 5
+  # Override the player count shown in the server list (-1 to disable).
+  motd-max-players: -1
 
 # Rank ladder auto-promotion (see plugins/ForgeCore/ranks.yml).
 ranks:

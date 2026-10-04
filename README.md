@@ -4,13 +4,13 @@
 
 <h1 align="center">ForgeCore</h1>
 
-<p align="center"><i>The all-in-one essentials suite for Paper — 227 original commands across teleport, moderation, economy, player systems, world admin, portals, holograms, ranks, flight charges, schedules and network tools.</i></p>
+<p align="center"><i>The all-in-one essentials suite for Paper — 236 original commands across teleport, moderation, economy, player systems, world admin, portals, holograms, ranks, flight charges, schedules and network tools.</i></p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/version-1.0.0-ff7b2e?style=for-the-badge" alt="version 1.0.0">
   <img src="https://img.shields.io/badge/Paper-26.3-2f9e6e?style=for-the-badge" alt="Paper 26.3">
   <img src="https://img.shields.io/badge/Java-25-f89820?style=for-the-badge" alt="Java 25">
-  <img src="https://img.shields.io/badge/commands-227-2563eb?style=for-the-badge" alt="227 commands">
+  <img src="https://img.shields.io/badge/commands-236-2563eb?style=for-the-badge" alt="236 commands">
   <img src="https://img.shields.io/badge/deprecated_APIs-zero-10b981?style=for-the-badge" alt="zero deprecated APIs">
   <img src="https://img.shields.io/badge/dependencies-zero-6b7280?style=for-the-badge" alt="zero dependencies">
 </p>
@@ -38,12 +38,21 @@ An original implementation written from scratch for Paper 26.3. Zero runtime dep
 - **Schedules** — event-driven actions (first join, join, quit, death, respawn, teleport) plus interval and playtime-milestone triggers
 - **Network** — `/server`, `/sendall`, cross-network broadcast, server list via the BungeeCord channel
 - **Importers** — EssentialsX userdata/warps/kits import, legacy user-folder import
-- **Clickable help** — `/help forgecore` pages every command you can use, with clickable pagination and per-command detail; `/forgecore help` works from console too
-- **Usage hints** — every command error is followed by a clickable usage line that fills the command in chat
 
 ## Commands
 
 Every command defaults to permission `forgecore.<name>` (see [Permissions](#permissions) for the extras). Aliases are shown in parentheses.
+
+## Merged plugins
+
+The six standalone Forge plugins have been merged into ForgeCore, keeping the more advanced implementation wherever features overlapped:
+
+- **forge-tablist** — animated tablist now uses Adventure's non-deprecated `Audience#sendPlayerListHeaderAndFooter`; per-group tab names (permission-based prefix/suffix wrapped around nicks) and the animated server-list MOTD were merged in.
+- **forge-playtime** — milestone reward system merged (`/playtimerewards` GUI with claimed/available/locked states, one-time console-command rewards); playtime tracking itself stays on ForgeCore's unified tracker.
+- **forge-announcer** — full announcer engine merged (`/announce`): per-announcement intervals, chat/action-bar/boss-bar/title delivery, sequential/random rotation, broadcast-by-id.
+- **forge-chat** — channels (global/local/staff via `/ch`, `/g`, `/l`), @mentions, anti-spam, word filter, permission-group formatting, hover cards, per-channel slowmode merged; `/msg` was upgraded in place with group formatting and PM templates.
+- **forge-stack** — entity, item and XP-orb stacking plus spawner stacking (`/stack`) merged wholesale.
+- **forge-items** — the entire custom-item system merged (`/fitems`): YAML items, 25 activators, 25 action verbs, mana, item levels/XP, drop tables, sets, recipes, in-game GUI editor and browser GUI.
 
 ### Core (1)
 
@@ -317,7 +326,39 @@ Every command defaults to permission `forgecore.<name>` (see [Permissions](#perm
 | `/tablistupdate` | Force-refresh the animated tablist and player tab entries. | `/tablistupdate` |
 | `/viewrange` | Show or set a world's view distance. | `/viewrange [range] [world]` |
 
-<!-- total: 227 -->
+### Merged: playtime milestones (1)
+
+| Command | Description | Usage |
+|---|---|---|
+| `/playtimerewards` (/prewards, /milestones) | Open the playtime milestone rewards GUI. | `/playtimerewards [reload]` |
+
+### Merged: announcer (1)
+
+| Command | Description | Usage |
+|---|---|---|
+| `/announce` (/fannouncer) | Manage scheduled announcements (list, reload, broadcast). | `/announce <list|reload|broadcast <id>>` |
+
+### Merged: chat channels (5)
+
+| Command | Description | Usage |
+|---|---|---|
+| `/ch` (/channel) | Show or set your default chat channel. | `/ch [global|local|staff]` |
+| `/chatreload` | Reload the chat configuration. | `/chatreload` |
+| `/g` | Send a one-shot message to global chat. | `/g <message...>` |
+| `/l` | Send a one-shot message to nearby players. | `/l <message...>` |
+| `/slowmode` | Set a channel's slowmode delay in seconds. | `/slowmode <global|local|staff> <seconds>` |
+
+### Merged: stacking (1)
+
+| Command | Description | Usage |
+|---|---|---|
+| `/stack` (/fstack) | Entity, item and spawner stacking controls. | `/stack <reload|stackall|clearall|givespawner|info|toggle>` |
+
+### Merged: custom items (1)
+
+| Command | Description | Usage |
+|---|---|---|
+| `/fitems` (/forgeitems) | Custom items: give, browse and edit. | `/fitems <reload|give|list|menu|edit|create|delete>` |
 ## Permissions
 
 - Every command above defaults to `forgecore.<command>`.
@@ -423,7 +464,8 @@ This compiles with `-Werror -Xlint:deprecation` against `paper-api:26.3.build.35
 
 ## API notes
 
-- `TablistManager` sets the tablist header/footer through `Player#setPlayerListHeaderFooter`, which Paper 26.3 marks `@Deprecated`. The entire Paper 26.3 API surface was checked: there is **no** non-deprecated setter for the tablist header/footer (Component getters exist; no Component setter). The call is contained in a single private method with `@SuppressWarnings("deprecation")` so the animated tablist keeps working until Paper ships a replacement. Everything else in the plugin is deprecation-free.
+- The tablist header/footer goes through Adventure's non-deprecated `Audience#sendPlayerListHeaderAndFooter` (found via forge-tablist — an earlier draft used a deprecated Bukkit setter because the Paper-only API surface was checked first).
+- The animated MOTD uses `PaperServerListPingEvent` with a wall-clock-derived frame, so it animates without a task and stays safe on Netty ping threads.
 
 ## The Forge suite
 

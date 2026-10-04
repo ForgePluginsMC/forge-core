@@ -1,0 +1,63 @@
+package com.forge.core.merge.items;
+
+import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.Nullable;
+
+/**
+ * Everything an action needs to know about one activator firing.
+ * Target and location may be null depending on the trigger.
+ */
+public record ActivationContext(
+        Player player,
+        CustomItem item,
+        Activator activator,
+        ItemStack stack,
+        @Nullable Entity target,
+        @Nullable Location location) {
+    private static final NamespacedKey USES_KEY = new NamespacedKey("forgeitems", "uses_left");
+
+    /** Location to use for world effects: explicit location, else target, else player. */
+    public Location effectLocation() {
+        if (location != null) {
+            return location;
+        }
+        if (target != null) {
+            return target.getLocation();
+        }
+        return player.getLocation();
+    }
+
+    /**
+     * Replaces %player% %target% %x% %y% %z% %world% %uses% %rarity% %set%
+     * placeholders. Never returns null.
+     */
+    public String resolve(@Nullable String raw) {
+        if (raw == null) {
+            return "";
+        }
+        String out = raw.replace("%player%", player.getName())
+                .replace("%world%", player.getWorld().getName());
+        Location loc = effectLocation();
+        out = out.replace("%x%", String.valueOf(loc.getBlockX()))
+                .replace("%y%", String.valueOf(loc.getBlockY()))
+                .replace("%z%", String.valueOf(loc.getBlockZ()));
+        out = out.replace("%target%", target != null ? target.getName() : player.getName());
+        out = out.replace("%rarity%", item.rarity().pretty());
+        out = out.replace("%set%", item.setId() != null ? item.setId() : "");
+        String uses = "";
+        var meta = stack.getItemMeta();
+        if (meta != null) {
+            Integer left = meta.getPersistentDataContainer().get(USES_KEY, PersistentDataType.INTEGER);
+            if (left != null) {
+                uses = String.valueOf(left);
+            }
+        }
+        out = out.replace("%uses%", uses);
+        return out;
+    }
+}

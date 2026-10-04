@@ -2,10 +2,15 @@ package com.forge.core.cmd.playerb;
 
 import com.forge.core.ForgeCore;
 import com.forge.core.command.ForgeCommand;
+import com.forge.core.merge.chat.ChatManager;
+import com.forge.core.merge.chat.ChatText;
 import com.forge.core.util.Players;
 import com.forge.core.util.Text;
 import java.util.List;
 import java.util.UUID;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.tag.Tag;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -13,6 +18,9 @@ import org.bukkit.entity.Player;
  * /msg — private message. Blocked when the sender is muted/silenced, and when
  * the target ignores the sender (unless the sender has
  * {@code forgecore.ignore.bypass}). Copies go to social spies.
+ *
+ * <p>Names use the merged chat system's group formatting; PM line templates
+ * come from {@code chat.yml} ({@code pm.format-to/from/spy}).
  */
 public final class MsgCommand extends ForgeCommand {
     public MsgCommand(ForgeCore plugin) {
@@ -85,20 +93,44 @@ public final class MsgCommand extends ForgeCommand {
             return;
         }
         String targetName = plugin.users().get(target).nickOrName(target);
-        String safeMessage = Text.escape(message);
-        target.sendMessage(Text.of("<gray>[<gold>" + Text.escape(fromName) + "</gold> -> <gold>me</gold>]</gray> "
-                + safeMessage));
+        ChatManager chat = ChatManager.get();
+        boolean color = chat != null && fromPlayer != null && chat.meta(fromPlayer.getUniqueId()).color();
+        Component body = color ? ChatText.safe(message) : Component.text(message);
+        Component fromComp = chat == null
+                ? Text.of("<gold>" + Text.escape(fromName) + "</gold>")
+                : chat.formatName(fromPlayer, fromName);
+        Component toComp = chat == null
+                ? Text.of("<gold>" + Text.escape(targetName) + "</gold>")
+                : chat.formatName(target, targetName);
+        TagResolver senderR = TagResolver.resolver("sender", Tag.inserting(fromComp));
+        TagResolver recipientR = TagResolver.resolver("recipient", Tag.inserting(toComp));
+        TagResolver messageR = TagResolver.resolver("message", Tag.inserting(body));
+
+        Component legacyTo = Text.of("<gray>[<gold>" + Text.escape(fromName) + "</gold> -> <gold>me</gold>]</gray> "
+                + Text.escape(message));
+        Component legacyFrom = Text.of("<gray>[<gold>me</gold> -> <gold>" + Text.escape(targetName)
+                + "</gold>]</gray> " + Text.escape(message));
+        Component legacySpy = Text.of("<gray>[spy] " + Text.escape(fromName) + " -> "
+                + Text.escape(targetName) + ": " + Text.escape(message));
+        Component toLine = chat == null ? legacyTo
+                : ChatText.render(ChatText.bracesToTags(chat.settings().pmFormatTo()), legacyTo, senderR, messageR);
+        Component fromLine = chat == null ? legacyFrom
+                : ChatText.render(ChatText.bracesToTags(chat.settings().pmFormatFrom()), legacyFrom, recipientR,
+                        messageR);
+        Component spyLine = chat == null ? legacySpy
+                : ChatText.render(ChatText.bracesToTags(chat.settings().pmFormatSpy()), legacySpy, senderR,
+                        recipientR, messageR);
+
+        target.sendMessage(toLine);
         if (!(sender instanceof Player senderPlayer && senderPlayer.getUniqueId().equals(target.getUniqueId()))) {
-            sender.sendMessage(Text.of("<gray>[<gold>me</gold> -> <gold>" + Text.escape(targetName)
-                    + "</gold>]</gray> " + safeMessage));
+            sender.sendMessage(fromLine);
         }
         for (Player online : plugin.getServer().getOnlinePlayers()) {
             if (online.getUniqueId().equals(fromUuid) || online.getUniqueId().equals(target.getUniqueId())) {
                 continue;
             }
             if (plugin.mutes().socialSpy(online)) {
-                online.sendMessage(Text.of("<gray>[spy] " + Text.escape(fromName) + " -> "
-                        + Text.escape(targetName) + ": " + safeMessage));
+                online.sendMessage(spyLine);
             }
         }
         MsgManager.get().setLast(fromUuid, target.getUniqueId());

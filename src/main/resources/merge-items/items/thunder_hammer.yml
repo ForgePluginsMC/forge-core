@@ -1,0 +1,49 @@
+id: thunder_hammer
+material: MACE
+name: "<gradient:#ffcf3f:#ff7b2e>Thunder Hammer</gradient>"
+lore:
+  - "<gray>Right-click: call down lightning"
+  - "<gray>Shift-right-click: <yellow>THUNDER SLAM"
+  - ""
+  - "<dark_gray>Forged in the heart of a storm."
+enchantments:
+  minecraft:knockback: 2
+attributes:
+  minecraft:attack_damage:
+    amount: 12
+    operation: ADD_NUMBER
+    slot: ANY
+unbreakable: true
+max-stack-size: 1
+keep-on-death: true
+usage-limit: 250
+levels:
+  max-level: 5
+  xp-base: 50
+  xp-growth: 1.8
+  xp-per-trigger: 4
+  xp-per-kill: 25
+  level-up-message: "<gold>Your <name> <gold>reached level <white><level><gold>!"
+  level-up-actions:
+    - "particle minecraft:totem_of_undying 30 0.5 0.1"
+    - "title <gold>Level <level>!"
+activators:
+  zap:
+    trigger: RIGHT_CLICK
+    cooldown-seconds: 4
+    mana-cost: 10
+    actions:
+      - "lightning"
+      - "message <yellow>⚡ Zap!"
+    cancel-event: true
+  slam:
+    trigger: SHIFT_RIGHT_CLICK
+    cooldown-seconds: 8
+    chance: 1.0
+    mana-cost: 30
+    actions:
+      - "lightning"
+      - "explode 3"
+      - "message <gold><bold>THUNDER SLAM!"
+      - "sound minecraft:entity.lightning_bolt.thunder 1.0 0.8"
+    cancel-event: true

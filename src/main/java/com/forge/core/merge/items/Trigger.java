@@ -1,0 +1,47 @@
+package com.forge.core.merge.items;
+
+import org.jetbrains.annotations.Nullable;
+
+/** All activator trigger types supported by ItemsModule. */
+public enum Trigger {
+    RIGHT_CLICK,
+    LEFT_CLICK,
+    SHIFT_RIGHT_CLICK,
+    HIT_ENTITY,
+    KILL_ENTITY,
+    BLOCK_BREAK,
+    BLOCK_PLACE,
+    TAKE_DAMAGE,
+    EQUIP,
+    UNEQUIP,
+    CONSUME,
+    PROJECTILE_HIT,
+    PROJECTILE_LAUNCH,
+    SNEAK_TOGGLE,
+    SNEAK_START,
+    SPRINT_START,
+    GLIDE_START,
+    ITEM_DROP,
+    ITEM_PICKUP,
+    PLAYER_DEATH,
+    PLAYER_JOIN,
+    PLAYER_RESPAWN,
+    WORLD_CHANGE,
+    FISH_CAUGHT,
+    LEVEL_UP,
+    LOOP,
+    /** Synthetic markers for manager-driven execution; never fired by events. */
+    SET_BONUS;
+
+    /** Parses a trigger name from config; returns null and logs nothing (caller warns). */
+    public static @Nullable Trigger parse(@Nullable String raw) {
+        if (raw == null) {
+            return null;
+        }
+        try {
+            return Trigger.valueOf(raw.trim().toUpperCase().replace('-', '_').replace(' ', '_'));
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
+}

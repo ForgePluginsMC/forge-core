@@ -10,6 +10,11 @@ import com.forge.core.cmd.systemsa.SystemsAPack;
 import com.forge.core.cmd.systemsb.SystemsBPack;
 import com.forge.core.cmd.teleport.TeleportPack;
 import com.forge.core.help.ForgeCoreCommand;
+import com.forge.core.merge.announcer.AnnouncerPack;
+import com.forge.core.merge.chat.ChatPack;
+import com.forge.core.merge.items.ItemsPack;
+import com.forge.core.merge.playtime.PlaytimePack;
+import com.forge.core.merge.stack.StackPack;
 import com.forge.core.util.Text;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
@@ -55,6 +60,11 @@ public final class CommandRegistry {
         commands.addAll(SystemsAPack.commands(plugin));
         commands.addAll(SystemsBPack.commands(plugin));
         commands.add(new ForgeCoreCommand(plugin));
+        commands.addAll(PlaytimePack.commands(plugin));
+        commands.addAll(AnnouncerPack.commands(plugin));
+        commands.addAll(ChatPack.commands(plugin));
+        commands.addAll(StackPack.commands(plugin));
+        commands.addAll(ItemsPack.commands(plugin));
         return commands;
     }
 

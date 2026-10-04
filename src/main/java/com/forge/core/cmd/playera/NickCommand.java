@@ -59,7 +59,7 @@ public final class NickCommand extends PlayerACommand {
         UserData data = plugin.users().get(target);
         if (nickArg.equalsIgnoreCase("off")) {
             data.setNick(null);
-            Nicks.applyRaw(target, null);
+            Nicks.applyRaw(plugin, target, null);
             plugin.users().save(target.getUniqueId());
             Text.ok(sender, "Nickname cleared for <white>" + Text.escape(target.getName()) + "</white>.");
             return;
@@ -70,7 +70,7 @@ public final class NickCommand extends PlayerACommand {
             return;
         }
         data.setNick(mini);
-        Nicks.applyRaw(target, mini);
+        Nicks.applyRaw(plugin, target, mini);
         plugin.users().save(target.getUniqueId());
         Text.ok(sender, "Nickname set to " + mini + "<green>.");
     }
