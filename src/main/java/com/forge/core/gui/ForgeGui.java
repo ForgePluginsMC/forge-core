@@ -82,6 +82,7 @@ public abstract class ForgeGui implements InventoryHolder {
 
     /** Open this GUI for a player. */
     public final void open(Player player) {
+        GuiManager.get().stashInventory(player);
         items.clear();
         build(player);
         fillEmpty();
@@ -89,7 +90,13 @@ public abstract class ForgeGui implements InventoryHolder {
         Tag tag = new Tag(this);
         Inventory inv = Bukkit.createInventory(tag, size(), title());
         for (Map.Entry<Integer, GuiItem> entry : items.entrySet()) {
-            inv.setItem(entry.getKey(), entry.getValue().stack());
+            int slot = entry.getKey();
+            if (slot < 54) {
+                inv.setItem(slot, entry.getValue().stack());
+            } else {
+                // Raw slots 54-89 map to the player's own inventory view slots.
+                player.getInventory().setItem(slot - 54, entry.getValue().stack());
+            }
         }
         this.inventory = inv;
         GuiManager.get().track(player, this);

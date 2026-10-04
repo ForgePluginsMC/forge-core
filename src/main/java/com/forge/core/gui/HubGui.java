@@ -56,12 +56,12 @@ public final class HubGui extends WebGui {
         {24, 25, 26, 33, 34, 35},
     };
 
-    /** Footer slots. */
-    private static final int SLOT_MAIL = 45;
-    private static final int SLOT_PLAYERS = 46;
-    private static final int SLOT_PREV = 48;
-    private static final int SLOT_NEXT = 50;
-    private static final int SLOT_CLOSE = 53;
+    /** Hotbar nav slots (raw). */
+    private static final int SLOT_MAIL = 82;
+    private static final int SLOT_PLAYERS = 83;
+    private static final int SLOT_PREV = 84;
+    private static final int SLOT_NEXT = 86;
+    private static final int SLOT_CLOSE = 88;
 
     private final ForgeCore plugin;
     private final int page;
@@ -157,10 +157,10 @@ public final class HubGui extends WebGui {
                 .action(p -> new PlayerListGui(plugin, self).open(p)));
         // Pagination (no tooltip — arrows are baked into the glyph)
         if (page > 0) {
-            set(SLOT_PREV, ghost(p -> new HubGui(plugin, page - 1).open(p)));
+            set(SLOT_PREV, GuiItem.of(Material.PAPER).model(ForgeIcons.ARROW_LEFT).name("<yellow><bold>Previous Page").lore("<gray>Go back one page").action(p -> new HubGui(plugin, page - 1).open(p)));
         }
         if (page < PAGES.size() - 1) {
-            set(SLOT_NEXT, ghost(p -> new HubGui(plugin, page + 1).open(p)));
+            set(SLOT_NEXT, GuiItem.of(Material.PAPER).model(ForgeIcons.ARROW_RIGHT).name("<yellow><bold>Next Page").lore("<gray>Go forward one page").action(p -> new HubGui(plugin, page + 1).open(p)));
         }
         // Close (tooltip kept)
         set(SLOT_CLOSE, GuiItem.of(Material.PAPER)

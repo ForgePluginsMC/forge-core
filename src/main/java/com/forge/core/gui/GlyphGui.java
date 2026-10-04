@@ -46,6 +46,16 @@ public abstract class GlyphGui extends WebGui {
     /** PUA char of this GUI's background glyph. */
     protected abstract String glyphChar();
 
+    /**
+     * Hotbar navigation slots (raw slots). The hotbar is the nav bar:
+     * 81 back, 83 prev, 84 page info, 85 next, 88 close.
+     */
+    protected static final int HOTBAR_BACK = 81;
+    protected static final int HOTBAR_PREV = 83;
+    protected static final int HOTBAR_PAGE = 84;
+    protected static final int HOTBAR_NEXT = 85;
+    protected static final int HOTBAR_CLOSE = 88;
+
     @Override
     protected Component title() {
         return Component.text(ALIGN_LEFT + glyphChar()).font(GLYPH_FONT);
@@ -56,18 +66,66 @@ public abstract class GlyphGui extends WebGui {
         // Header is baked into the title glyph.
     }
 
+    /**
+     * Hotbar navigation. Chest row 5 is content space now; nav lives in
+     * the hotbar as visible button items.
+     */
     @Override
     protected void buildFooter(Player viewer) {
-        // Footer art is baked into the glyph; place invisible click targets.
         if (parent() != null) {
-            set(SLOT_BACK, ghost(p -> parent().open(p)));
+            set(HOTBAR_BACK, GuiItem.of(Material.PAPER)
+                    .model(ForgeIcons.BUTTON_BACK)
+                    .name("<red><bold>Back")
+                    .lore("<gray>Return to the previous menu.")
+                    .action(p -> parent().open(p)));
         }
-        set(SLOT_CLOSE, ghost(Player::closeInventory));
+        setupPagination(viewer);
+        set(HOTBAR_CLOSE, GuiItem.of(Material.PAPER)
+                .model(ForgeIcons.BUTTON_DANGER)
+                .name("<red><bold>Close")
+                .lore("<gray>Close this menu.")
+                .action(Player::closeInventory));
     }
 
     @Override
     protected void setupPagination(Player viewer) {
-        // Subclasses with pages override buildFooter to add prev/next ghosts.
+        // Subclasses with pages override buildFooter to add prev/next.
+    }
+
+    /**
+     * Hotbar pagination buttons.
+     *
+     * @param viewer the viewer
+     * @param page current page (0-based)
+     * @param totalPages total page count
+     * @param gui the paginated gui (for page navigation)
+     */
+    protected final void addHotbarPagination(
+            Player viewer, int page, int totalPages, PaginatedGui<?> gui) {
+        if (totalPages > 1) {
+            if (page > 0) {
+                set(HOTBAR_PREV, GuiItem.of(Material.PAPER)
+                        .model(ForgeIcons.ARROW_LEFT)
+                        .name("<yellow><bold>Previous Page")
+                        .lore("<gray>Go to page " + page + " of " + totalPages)
+                        .action(p -> gui.openPage(p, page - 1)));
+            }
+            StringBuilder dots = new StringBuilder();
+            for (int i = 0; i < Math.min(totalPages, 10); i++) {
+                dots.append(i == page ? "<gold>●" : "<dark_gray>○");
+            }
+            set(HOTBAR_PAGE, GuiItem.of(Material.PAPER)
+                    .model(page == 0 ? ForgeIcons.DOT_ACTIVE : ForgeIcons.DOT_INACTIVE)
+                    .name("<yellow>Page " + (page + 1) + " <gray>of " + totalPages)
+                    .lore(dots.toString()));
+            if (page < totalPages - 1) {
+                set(HOTBAR_NEXT, GuiItem.of(Material.PAPER)
+                        .model(ForgeIcons.ARROW_RIGHT)
+                        .name("<yellow><bold>Next Page")
+                        .lore("<gray>Go to page " + (page + 2) + " of " + totalPages)
+                        .action(p -> gui.openPage(p, page + 1)));
+            }
+        }
     }
 
     /** Invisible filler so the glyph background shows through cleanly. */

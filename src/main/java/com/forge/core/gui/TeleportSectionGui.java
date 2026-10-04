@@ -106,10 +106,10 @@ public final class TeleportSectionGui extends GlyphGui {
         super.buildFooter(viewer);
         int totalPages = (buttons().size() + 5) / 6;
         if (page > 0) {
-            set(SLOT_PREV, ghost(p -> new TeleportSectionGui(plugin, parent, page - 1).open(p)));
+            set(HOTBAR_PREV, GuiItem.of(org.bukkit.Material.PAPER).model(ForgeIcons.ARROW_LEFT).name("<yellow><bold>Previous Page").lore("<gray>Go back one page").action(p -> new TeleportSectionGui(plugin, parent, page - 1).open(p)));
         }
         if (page < totalPages - 1) {
-            set(SLOT_NEXT, ghost(p -> new TeleportSectionGui(plugin, parent, page + 1).open(p)));
+            set(HOTBAR_NEXT, GuiItem.of(org.bukkit.Material.PAPER).model(ForgeIcons.ARROW_RIGHT).name("<yellow><bold>Next Page").lore("<gray>Go forward one page").action(p -> new TeleportSectionGui(plugin, parent, page + 1).open(p)));
         }
     }
 

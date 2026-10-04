@@ -86,6 +86,7 @@ public final class ForgeCore extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        com.forge.core.gui.GuiManager.get().restoreAll();
         if (users != null) {
             users.saveAll();
         }
