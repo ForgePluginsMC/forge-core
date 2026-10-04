@@ -59,8 +59,10 @@ public final class ResourcepackCommand extends ForgeCommand {
         String hashHex = plugin.getConfig().getString("resourcepack-hash", "");
         byte[] hash = hashHex.isBlank() ? new byte[0] : hexToBytes(hashHex);
         Text.send(sender, "<gold>Sending ForgeCore UI resource pack...");
+        // Use URL-based UUID so client treats each pack version as distinct.
+        // Same UUID + different URL = client uses cached pack.
         java.util.UUID packId = java.util.UUID.nameUUIDFromBytes(
-                "forgecore-ui".getBytes(java.nio.charset.StandardCharsets.UTF_8));
+                url.getBytes(java.nio.charset.StandardCharsets.UTF_8));
         net.kyori.adventure.text.Component prompt =
                 net.kyori.adventure.text.minimessage.MiniMessage.miniMessage()
                         .deserialize("<gold>ForgeCore UI <gray>— dark dashboard theme");
