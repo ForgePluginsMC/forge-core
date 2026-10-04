@@ -139,30 +139,38 @@ public final class HubGui extends GlyphGui {
     @Override
     protected void buildFooter(Player viewer) {
         HubGui self = this;
-        // Mail (tooltip kept so players know what it is)
-        set(SLOT_MAIL, GuiItem.of(Material.PAPER)
-                .model(ForgeIcons.INVISIBLE)
+        // Back (if parent) and Close via standard hotbar nav.
+        super.buildFooter(viewer);
+        // Mail button in hotbar.
+        set(82, GuiItem.of(Material.PAPER)
+                .model(ForgeIcons.ICON_MAIL)
                 .name("<aqua><bold>Mail")
                 .lore("<gray>Read your messages.")
                 .action(p -> new MailGui(plugin, self).open(p)));
-        // Online players
-        set(SLOT_PLAYERS, GuiItem.of(Material.PAPER)
-                .model(ForgeIcons.INVISIBLE)
+        // Online players button in hotbar.
+        set(86, GuiItem.of(Material.PLAYER_HEAD)
                 .name("<green><bold>Online Players")
                 .lore("<gray>View online players.")
                 .action(p -> new PlayerListGui(plugin, self).open(p)));
-        // Pagination (no tooltip — arrows are baked into the glyph)
-        if (page > 0) {
-            set(SLOT_PREV, GuiItem.of(Material.PAPER).model(ForgeIcons.ARROW_LEFT).name("<yellow><bold>Previous Page").lore("<gray>Go back one page").action(p -> new HubGui(plugin, page - 1).open(p)));
+        // Pagination in hotbar.
+        if (PAGES.size() > 1) {
+            if (page > 0) {
+                set(HOTBAR_PREV, GuiItem.of(Material.PAPER)
+                        .model(ForgeIcons.ARROW_LEFT)
+                        .name("<yellow><bold>Previous Page")
+                        .lore("<gray>Go back one page.")
+                        .action(p -> new HubGui(plugin, page - 1).open(p)));
+            }
+            set(HOTBAR_PAGE, GuiItem.of(Material.PAPER)
+                    .model(ForgeIcons.DOT_ACTIVE)
+                    .name("<yellow>Page " + (page + 1) + " <gray>of " + PAGES.size()));
+            if (page < PAGES.size() - 1) {
+                set(HOTBAR_NEXT, GuiItem.of(Material.PAPER)
+                        .model(ForgeIcons.ARROW_RIGHT)
+                        .name("<yellow><bold>Next Page")
+                        .lore("<gray>Go forward one page.")
+                        .action(p -> new HubGui(plugin, page + 1).open(p)));
+            }
         }
-        if (page < PAGES.size() - 1) {
-            set(SLOT_NEXT, GuiItem.of(Material.PAPER).model(ForgeIcons.ARROW_RIGHT).name("<yellow><bold>Next Page").lore("<gray>Go forward one page").action(p -> new HubGui(plugin, page + 1).open(p)));
-        }
-        // Close (tooltip kept)
-        set(SLOT_CLOSE, GuiItem.of(Material.PAPER)
-                .model(ForgeIcons.INVISIBLE)
-                .name("<red><bold>Close")
-                .lore("<gray>Close this menu.")
-                .action(Player::closeInventory));
     }
 }
