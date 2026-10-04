@@ -10,7 +10,7 @@ import java.util.List;
  *
  * <p>Commands in this pack: me, msg, reply, ignore, compass, tree, ride, sit,
  * suicide, workbench, ender, walkspeed, time, weather, servertime, colors,
- * colorlimits, ctext, editctext, book, getbook, preview, merchant, recipe,
+ * colorlimits, ctext, editctext, book, getbook, preview, recipe,
  * note, dispose, clearender, actionbarmsg, titlemsg, sound, info, stats,
  * statsedit, status, version, placeholders, haspermission, checkperm.
  */
@@ -43,7 +43,6 @@ public final class PlayerBPack {
         commands.add(new BookCommand(plugin));
         commands.add(new GetbookCommand(plugin));
         commands.add(new PreviewCommand(plugin));
-        commands.add(new MerchantCommand(plugin));
         commands.add(new RecipeCommand(plugin));
         commands.add(new NoteCommand(plugin));
         commands.add(new DisposeCommand(plugin));

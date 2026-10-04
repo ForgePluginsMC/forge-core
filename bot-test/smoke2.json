@@ -1,0 +1,1 @@
+[{"do":"sleep","s":8.0},{"cmd":"forgecore","do":"cmd","wait":1.5},{"cmd":"balance","do":"cmd","wait":1.5},{"cmd":"reply hi bot1!","do":"cmd","wait":1.5}]

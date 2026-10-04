@@ -1,0 +1,1 @@
+[{"cmd":"forgecore","do":"cmd","wait":1.5},{"cmd":"help forgecore","do":"cmd","wait":1.5},{"cmd":"balance","do":"cmd","wait":1.5},{"cmd":"ping","do":"cmd","wait":1.5}]

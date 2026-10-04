@@ -1,0 +1,1 @@
+[{"do":"sleep","s":3.0},{"cmd":"reply hi bot1!","do":"cmd","wait":1.5},{"cmd":"tpaccept","do":"cmd","wait":2.0},{"cmd":"balance","do":"cmd","wait":1.5}]

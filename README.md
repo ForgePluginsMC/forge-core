@@ -4,13 +4,13 @@
 
 <h1 align="center">ForgeCore</h1>
 
-<p align="center"><i>The all-in-one essentials suite for Paper — 236 original commands across teleport, moderation, economy, player systems, world admin, portals, holograms, ranks, flight charges, schedules and network tools.</i></p>
+<p align="center"><i>The all-in-one essentials suite for Paper — 235 original commands across teleport, moderation, economy, player systems, world admin, portals, holograms, ranks, flight charges, schedules and network tools.</i></p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/version-1.0.0-ff7b2e?style=for-the-badge" alt="version 1.0.0">
   <img src="https://img.shields.io/badge/Paper-26.3-2f9e6e?style=for-the-badge" alt="Paper 26.3">
   <img src="https://img.shields.io/badge/Java-25-f89820?style=for-the-badge" alt="Java 25">
-  <img src="https://img.shields.io/badge/commands-236-2563eb?style=for-the-badge" alt="236 commands">
+  <img src="https://img.shields.io/badge/commands-235-2563eb?style=for-the-badge" alt="235 commands">
   <img src="https://img.shields.io/badge/deprecated_APIs-zero-10b981?style=for-the-badge" alt="zero deprecated APIs">
   <img src="https://img.shields.io/badge/dependencies-zero-6b7280?style=for-the-badge" alt="zero dependencies">
 </p>
@@ -230,7 +230,6 @@ The six standalone Forge plugins have been merged into ForgeCore, keeping the mo
 | `/ignore` | Toggle ignoring a player. | `/ignore <player>` |
 | `/info` | Show server information. | `/info` |
 | `/me` | Broadcast an emote: * <name> <message>. | `/me <message...>` |
-| `/merchant` | Open a villager merchant trading GUI. | `/merchant` |
 | `/msg` (/tell, /w, /pm) | Send a private message to a player. | `/msg <player> <message...>` |
 | `/note` | Keep personal notes. | `/note <add|list|delete|clear> [text...]` |
 | `/placeholders` | List ForgeCore's built-in placeholders. | `/placeholders` |

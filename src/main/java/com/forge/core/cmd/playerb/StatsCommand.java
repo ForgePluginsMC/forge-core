@@ -68,7 +68,7 @@ public final class StatsCommand extends ForgeCommand {
                 target.getStatistic(Statistic.WALK_ONE_CM) / 100000.0));
         stat(sender, "Distance flown", String.format("%.1f km",
                 target.getStatistic(Statistic.FLY_ONE_CM) / 100000.0));
-        stat(sender, "Items crafted", String.valueOf(target.getStatistic(Statistic.CRAFT_ITEM)));
+        stat(sender, "Sneak time", Time.format(target.getStatistic(Statistic.SNEAK_TIME) / 20L));
     }
 
     private static void stat(CommandSender sender, String label, String value) {

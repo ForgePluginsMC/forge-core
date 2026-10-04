@@ -1,0 +1,1 @@
+[{"cmd":"msg TestBot2 hello from bot1","do":"cmd","wait":2.0},{"cmd":"tpa TestBot2","do":"cmd","wait":2.0},{"cmd":"balance","do":"cmd","wait":1.5},{"cmd":"pay TestBot2 10","do":"cmd","wait":1.5}]
