@@ -110,11 +110,51 @@ public final class HubGui extends GlyphGui {
     protected void buildContent(Player viewer) {
         List<String> cards = PAGES.get(page);
         for (int i = 0; i < cards.size(); i++) {
-            Consumer<Player> action = cardAction(cards.get(i));
+            String cardId = cards.get(i);
+            Consumer<Player> action = cardAction(cardId);
+            String cardModel = cardModel(cardId);
+            String cardName = cardName(cardId);
             for (int slot : CARD_SLOTS[i]) {
-                set(slot, ghost(action));
+                // Vibrant card tile (renders at full brightness as item)
+                set(slot, GuiItem.of(Material.PAPER)
+                        .model(cardModel)
+                        .hideTooltip()
+                        .name(" ")
+                        .action(action));
             }
+            // Card label in the center slot (via lore on middle item)
+            // Actually, labels are baked into the title glyph
         }
+    }
+
+    /** Get the vibrant card model for a category. */
+    private String cardModel(String id) {
+        return switch (id) {
+            case "teleport" -> ForgeIcons.CARD_TELEPORT;
+            case "homes" -> ForgeIcons.CARD_HOMES;
+            case "warps" -> ForgeIcons.CARD_WARPS;
+            case "kits" -> ForgeIcons.CARD_KITS;
+            case "economy" -> ForgeIcons.CARD_ECONOMY;
+            case "guilds" -> ForgeIcons.CARD_GUILDS;
+            case "quests" -> ForgeIcons.CARD_QUESTS;
+            case "player" -> ForgeIcons.CARD_PLAYER;
+            default -> ForgeIcons.CARD_TELEPORT;
+        };
+    }
+
+    /** Get the display name for a card. */
+    private String cardName(String id) {
+        return switch (id) {
+            case "teleport" -> "Teleport";
+            case "homes" -> "Homes";
+            case "warps" -> "Warps";
+            case "kits" -> "Kits";
+            case "economy" -> "Economy";
+            case "guilds" -> "Guilds";
+            case "quests" -> "Quests";
+            case "player" -> "Player";
+            default -> id;
+        };
     }
 
     /** Get the action for a card category. */

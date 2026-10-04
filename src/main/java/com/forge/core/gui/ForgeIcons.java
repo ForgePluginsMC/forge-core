@@ -54,6 +54,16 @@ public final class ForgeIcons {
     public static final String ICON_KIT = "forge_icon_kit";
     public static final String ICON_MAIL = "forge_icon_mail";
 
+    /** Vibrant card background tiles (render at full brightness as items). */
+    public static final String CARD_TELEPORT = "forge_card_teleport";
+    public static final String CARD_HOMES = "forge_card_homes";
+    public static final String CARD_WARPS = "forge_card_warps";
+    public static final String CARD_KITS = "forge_card_kits";
+    public static final String CARD_ECONOMY = "forge_card_economy";
+    public static final String CARD_GUILDS = "forge_card_guilds";
+    public static final String CARD_QUESTS = "forge_card_quests";
+    public static final String CARD_PLAYER = "forge_card_player";
+
     /** Card piece positions for 3-wide card illustrations. */
     public enum CardPiece {
         LEFT("l"),

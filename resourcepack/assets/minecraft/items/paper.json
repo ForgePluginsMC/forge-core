@@ -604,6 +604,62 @@
           "type": "minecraft:model",
           "model": "minecraft:item/forge/forge_tile_red"
         }
+      },
+      {
+        "when": "forge_card_teleport",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/cards/forge_card_teleport"
+        }
+      },
+      {
+        "when": "forge_card_homes",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/cards/forge_card_homes"
+        }
+      },
+      {
+        "when": "forge_card_warps",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/cards/forge_card_warps"
+        }
+      },
+      {
+        "when": "forge_card_kits",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/cards/forge_card_kits"
+        }
+      },
+      {
+        "when": "forge_card_economy",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/cards/forge_card_economy"
+        }
+      },
+      {
+        "when": "forge_card_guilds",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/cards/forge_card_guilds"
+        }
+      },
+      {
+        "when": "forge_card_quests",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/cards/forge_card_quests"
+        }
+      },
+      {
+        "when": "forge_card_player",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/cards/forge_card_player"
+        }
       }
     ],
     "fallback": {
