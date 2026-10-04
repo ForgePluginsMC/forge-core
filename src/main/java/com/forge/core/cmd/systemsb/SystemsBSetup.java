@@ -40,6 +40,18 @@ public final class SystemsBSetup {
         schedules = new ScheduleManager(plugin);
         counter = new CounterManager(plugin);
         new ElevatorManager(plugin);
+        // Show the MOTD shortly after join.
+        plugin.getServer().getPluginManager().registerEvents(new org.bukkit.event.Listener() {
+            @org.bukkit.event.EventHandler
+            public void onJoin(org.bukkit.event.player.PlayerJoinEvent event) {
+                String motd = plugin.getConfig().getString("motd", null);
+                if (motd != null && !motd.isBlank()) {
+                    var player = event.getPlayer();
+                    plugin.getServer().getScheduler().runTaskLater(plugin,
+                            () -> com.forge.core.util.Text.send(player, motd), 40L);
+                }
+            }
+        }, plugin);
     }
 
     public static RankManager ranks() {

@@ -27,6 +27,8 @@ public final class PlayerASetup {
         PlayerAState.tmb = tmb;
         PlayerAState.cuff = cuff;
         PlayerAState.disabledEnchants = disabledEnchants;
+        PlayerAState.powertools = new PowertoolManager(plugin);
+        PlayerAState.unlimited = new UnlimitedManager(plugin);
 
         PluginManager manager = plugin.getServer().getPluginManager();
         manager.registerEvents(new PlayerAListener(plugin, tmb), plugin);

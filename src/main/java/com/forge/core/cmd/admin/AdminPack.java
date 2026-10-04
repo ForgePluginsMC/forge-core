@@ -54,6 +54,7 @@ public final class AdminPack {
         commands.add(new InvLoadCommand(plugin));
         commands.add(new InvRemoveCommand(plugin));
         commands.add(new InvSaveCommand(plugin));
+        commands.add(new BackupCommand(plugin));
         return commands;
     }
 }

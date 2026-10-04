@@ -66,6 +66,10 @@ public final class MoneyCommand extends ForgeCommand {
         if (target == null) {
             return;
         }
+        if (com.forge.core.cmd.playerb.PaytoggleCommand.blocked(plugin, target)
+                && !sender.hasPermission("forgecore.paytoggle.bypass")) {
+            throw new CommandRegistry.CommandFailure("That player is not accepting payments.");
+        }
         if (target.getUniqueId().equals(player.getUniqueId())) {
             throw new CommandRegistry.CommandFailure("You can't pay yourself.");
         }

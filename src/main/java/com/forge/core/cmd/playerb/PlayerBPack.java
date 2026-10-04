@@ -59,6 +59,18 @@ public final class PlayerBPack {
         commands.add(new PlaceholdersCommand(plugin));
         commands.add(new HaspermissionCommand(plugin));
         commands.add(new CheckpermCommand(plugin));
+        commands.add(new AnvilCommand(plugin));
+        commands.add(new GrindstoneCommand(plugin));
+        commands.add(new LoomCommand(plugin));
+        commands.add(new SmithingtableCommand(plugin));
+        commands.add(new StonecutterCommand(plugin));
+        commands.add(new CartographytableCommand(plugin));
+        commands.add(new MailCommand(plugin));
+        commands.add(new MailallCommand(plugin));
+        commands.add(new PaytoggleCommand(plugin));
+        commands.add(new MsgtoggleCommand(plugin));
+        commands.add(new RealnameCommand(plugin));
+        commands.add(new ItemdbCommand(plugin));
         return commands;
     }
 }

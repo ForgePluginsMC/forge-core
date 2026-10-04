@@ -92,6 +92,11 @@ public final class MsgCommand extends ForgeCommand {
             Text.error(sender, "That player is ignoring you.");
             return;
         }
+        if (MsgtoggleCommand.blocked(plugin, target)
+                && !sender.hasPermission("forgecore.msgtoggle.bypass")) {
+            Text.error(sender, "That player is not accepting private messages.");
+            return;
+        }
         String targetName = plugin.users().get(target).nickOrName(target);
         ChatManager chat = ChatManager.get();
         boolean color = chat != null && fromPlayer != null && chat.meta(fromPlayer.getUniqueId()).color();

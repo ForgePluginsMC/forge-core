@@ -64,6 +64,14 @@ public final class PlayerAPack {
         commands.add(new TagtoggleCommand(plugin));
         commands.add(new ShakeitoffCommand(plugin));
         commands.add(new CuffCommand(plugin));
+        commands.add(new PowertoolCommand(plugin));
+        commands.add(new PowertoollistCommand(plugin));
+        commands.add(new PowertooltoggleCommand(plugin));
+        commands.add(new ExtCommand(plugin));
+        commands.add(new LightningCommand(plugin));
+        commands.add(new FireballCommand(plugin));
+        commands.add(new NukeCommand(plugin));
+        commands.add(new UnlimitedCommand(plugin));
         return commands;
     }
 }

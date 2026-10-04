@@ -22,4 +22,14 @@ final class PlayerBState {
 
     /** Players with a dispose GUI currently open. */
     static final Set<UUID> disposeOpen = ConcurrentHashMap.newKeySet();
+
+    private static MailManager mailManager;
+
+    static void mailManager(MailManager manager) {
+        mailManager = manager;
+    }
+
+    static MailManager mail() {
+        return mailManager;
+    }
 }

@@ -20,6 +20,7 @@ public final class PlayerBSetup {
     public static void init(ForgeCore plugin) {
         MsgManager.init(plugin);
         CTextManager.init(plugin);
+        PlayerBState.mailManager(new MailManager(plugin));
         plugin.getServer().getPluginManager().registerEvents(new PlayerBListener(plugin), plugin);
         plugin.getServer().getScheduler().runTaskTimer(plugin, () -> tickCompass(), 20L, 20L);
     }

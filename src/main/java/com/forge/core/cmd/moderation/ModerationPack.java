@@ -57,6 +57,12 @@ public final class ModerationPack {
         commands.add(new MaxplayerCommand(plugin));
         commands.add(new SaveallCommand(plugin));
         commands.add(new CheckaccountCommand(plugin));
+        commands.add(new BanipCommand(plugin));
+        commands.add(new TempbanipCommand(plugin));
+        commands.add(new UnbanipCommand(plugin));
+        commands.add(new UnmuteCommand(plugin));
+        commands.add(new KickallCommand(plugin));
+        commands.add(new BanlistCommand(plugin));
         return commands;
     }
 }

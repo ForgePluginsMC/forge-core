@@ -8,7 +8,17 @@ final class PlayerAState {
     static TmbManager tmb;
     static CuffManager cuff;
     static DisableEnchantManager disabledEnchants;
+    static PowertoolManager powertools;
+    static UnlimitedManager unlimited;
 
     private PlayerAState() {
+    }
+
+    static PowertoolManager powertools() {
+        return powertools;
+    }
+
+    static UnlimitedManager unlimited() {
+        return unlimited;
     }
 }

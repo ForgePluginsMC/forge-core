@@ -23,6 +23,7 @@ public final class ModerationSetup {
         vanish = new VanishManager(plugin);
         maintenance = new MaintenanceManager(plugin);
         patrol = new PatrolManager(plugin);
+        ModerationState.ipBans(new IpBanManager(plugin));
         new InvViewGuard(plugin);
         new SessionTracker(plugin);
     }
