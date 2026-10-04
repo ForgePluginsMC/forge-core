@@ -65,7 +65,7 @@ public abstract class ForgeGui implements InventoryHolder {
     }
 
     /** Add a Back button at the last slot if a parent exists. */
-    protected final void addBackButton() {
+    protected void addBackButton() {
         ForgeGui parent = parent();
         if (parent != null) {
             set(size() - 1, GuiItem.of(Material.ARROW)

@@ -555,6 +555,13 @@
           "type": "minecraft:model",
           "model": "minecraft:item/forge/forge_card_kits_label_r"
         }
+      },
+      {
+        "when": "forge_invisible",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_invisible"
+        }
       }
     ],
     "fallback": {

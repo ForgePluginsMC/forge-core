@@ -24,6 +24,9 @@ public final class ForgeIcons {
     public static final String DOT_ACTIVE = "forge_dot_active";
     public static final String DOT_INACTIVE = "forge_dot_inactive";
 
+    /** Fully transparent item texture for glyph-menu click targets. */
+    public static final String INVISIBLE = "forge_invisible";
+
     // Status
     public static final String STATUS_ONLINE = "forge_status_online";
     public static final String STATUS_OFFLINE = "forge_status_offline";
@@ -31,8 +34,7 @@ public final class ForgeIcons {
     public static final String STATUS_AWAY = "forge_status_away";
 
     // Category icons
-    public static final String ICON_TELEPORT = "forge_icon_teleport";
-    public static final String ICON_MODERATION = "forge_icon_moderation";
+    public static final String ICON_TELEPORT = "forge_icon_teleport";    public static final String ICON_MODERATION = "forge_icon_moderation";
     public static final String ICON_ECONOMY = "forge_icon_economy";
     public static final String ICON_TOOLS = "forge_icon_tools";
     public static final String ICON_GUILD = "forge_icon_guild";

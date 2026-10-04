@@ -47,7 +47,7 @@ public abstract class WebGui extends ForgeGui {
     protected abstract List<String> breadcrumb();
 
     @Override
-    protected final Component title() {
+    protected Component title() {
         List<String> crumbs = breadcrumb();
         StringBuilder sb = new StringBuilder("<dark_gray>ForgeCore <gray>» ");
         for (int i = 0; i < crumbs.size(); i++) {
@@ -154,6 +154,12 @@ public abstract class WebGui extends ForgeGui {
                     .name("<dark_gray>No next page")
                     .lore("<dark_gray>You're on the last page"));
         }
+    }
+
+    /** WebGui manages its own footer — suppress the base-class back button. */
+    @Override
+    protected void addBackButton() {
+        // No-op: buildFooter() handles back/close navigation.
     }
 
     /** Fill content slots with items, starting from slot 9. */

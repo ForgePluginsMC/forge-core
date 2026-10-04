@@ -71,6 +71,19 @@ public final class GuiItem {
     }
 
     /**
+     * Hide the tooltip so hovering shows no item box. Used with invisible
+     * items whose visuals come from font glyphs in the inventory title.
+     *
+     * @return this item
+     */
+    public GuiItem hideTooltip() {
+        ItemMeta meta = stack.getItemMeta();
+        meta.setHideTooltip(true);
+        stack.setItemMeta(meta);
+        return this;
+    }
+
+    /**
      * Create a web-style card item: icon with title and description.
      *
      * @param icon the ForgeIcons key for the item texture
@@ -78,12 +91,25 @@ public final class GuiItem {
      * @param description MiniMessage description lines
      */
     public static GuiItem card(String icon, String title, String... description) {
+        return cardWithAction(icon, title, "<green>Click to open", description);
+    }
+
+    /**
+     * Create a web-style card item with a custom action label.
+     *
+     * @param icon the ForgeIcons key for the item texture
+     * @param title MiniMessage title
+     * @param actionLabel MiniMessage action line (e.g. "<yellow>Click to run scan")
+     * @param description MiniMessage description lines
+     */
+    public static GuiItem cardWithAction(String icon, String title, String actionLabel,
+            String... description) {
         List<String> lore = new ArrayList<>();
         for (String line : description) {
             lore.add("<gray>" + line);
         }
         lore.add("");
-        lore.add("<green>Click to open");
+        lore.add(actionLabel);
         return GuiItem.of(Material.PAPER)
                 .model(icon)
                 .name(title)

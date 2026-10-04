@@ -44,12 +44,11 @@ public final class DashboardDiagnosticsGui extends WebGui {
     @Override
     protected void buildContent(Player viewer) {
         // Lag scan card
-        set(11, GuiItem.card(ForgeIcons.STATUS_BUSY,
+        set(11, GuiItem.cardWithAction(ForgeIcons.STATUS_BUSY,
                 "<gold><bold>Lag Diagnosis",
-                "<gray>Run a 10-second scan of TPS,",
-                "<gray>entities, chunks, and memory.",
-                "",
-                "<yellow>Click to run scan")
+                "<yellow>Click to run scan",
+                "Run a 10-second scan of TPS,",
+                "entities, chunks, and memory.")
                 .action(p -> runLagScan(p)));
 
         // Show last scan results if available
@@ -68,12 +67,11 @@ public final class DashboardDiagnosticsGui extends WebGui {
         }
 
         // Issue detector
-        set(29, GuiItem.card(ForgeIcons.STATUS_OFFLINE,
+        set(29, GuiItem.cardWithAction(ForgeIcons.STATUS_OFFLINE,
                 "<gold><bold>Issue Detector",
-                "<gray>Automatic checks for config",
-                "<gray>errors, orphans, and conflicts.",
-                "",
-                "<yellow>Click to run checks")
+                "<yellow>Click to run checks",
+                "Automatic checks for config",
+                "errors, orphans, and conflicts.")
                 .action(p -> new IssueListGui(plugin).open(p)));
     }
 
