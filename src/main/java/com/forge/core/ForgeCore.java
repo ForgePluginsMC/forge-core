@@ -73,6 +73,9 @@ public final class ForgeCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(questGui, this);
         getServer().getPluginManager().registerEvents(
                 new com.forge.core.dialog.NpcListener(this), this);
+        getServer().getPluginManager().registerEvents(
+                com.forge.core.gui.GuiManager.get(), this);
+        com.forge.core.gui.ChatInput.init(this);
         help = new HelpManager(this);
         CommandRegistry.registerAll(this);
         com.forge.core.economy.VaultHook.init(this);

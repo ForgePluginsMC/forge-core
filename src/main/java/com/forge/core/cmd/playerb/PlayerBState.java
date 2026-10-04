@@ -10,7 +10,7 @@ import org.bukkit.entity.ArmorStand;
  * Session-only shared state for the player-B pack. All structures are
  * concurrent; entries are cleaned up on quit by {@link PlayerBListener}.
  */
-final class PlayerBState {
+public final class PlayerBState {
     private PlayerBState() {
     }
 
@@ -29,7 +29,7 @@ final class PlayerBState {
         mailManager = manager;
     }
 
-    static MailManager mail() {
+    public static MailManager mail() {
         return mailManager;
     }
 }

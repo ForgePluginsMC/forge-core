@@ -71,6 +71,7 @@ public final class CommandRegistry {
         commands.addAll(com.forge.core.guild.GuildPack.commands(plugin));
         commands.addAll(QuestPack.commands(plugin));
         commands.addAll(com.forge.core.cmd.dialog.DialogPack.commands(plugin));
+        commands.add(new com.forge.core.gui.MenuCommand(plugin));
         return commands;
     }
 
