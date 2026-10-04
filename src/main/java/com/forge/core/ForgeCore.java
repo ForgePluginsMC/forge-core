@@ -54,6 +54,7 @@ public final class ForgeCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CoreListener(this), this);
         help = new HelpManager(this);
         CommandRegistry.registerAll(this);
+        com.forge.core.economy.VaultHook.init(this);
 
         getLogger().info("ForgeCore enabled: " + CommandRegistry.count() + " commands registered.");
     }

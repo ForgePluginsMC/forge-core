@@ -3,9 +3,10 @@
 set -euo pipefail
 ROOT="$HOME/workspace/forge-core"
 DEPS="$HOME/workspace/.toolchains/paper-deps"
+VAULT="$HOME/workspace/.toolchains/vault"
 JAVAC="$HOME/workspace/.toolchains/jdk-25.0.4.1+1/bin/javac"
 JAR="$HOME/workspace/.toolchains/jdk-25.0.4.1+1/bin/jar"
-CP=$(ls "$DEPS"/*.jar | tr '\n' ':')
+CP=$(ls "$DEPS"/*.jar "$VAULT"/*.jar 2>/dev/null | tr '\n' ':')
 
 rm -rf "$ROOT/build" && mkdir -p "$ROOT/build/classes" "$ROOT/build/stage"
 find "$ROOT/src/main/java" -name '*.java' > "$ROOT/build/sources.txt"
