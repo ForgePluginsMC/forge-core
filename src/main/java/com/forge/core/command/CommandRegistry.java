@@ -4,6 +4,7 @@ import com.forge.core.ForgeCore;
 import com.forge.core.cmd.admin.AdminPack;
 import com.forge.core.cmd.economy.EconomyPack;
 import com.forge.core.cmd.moderation.ModerationPack;
+import com.forge.core.cmd.permission.PermissionPack;
 import com.forge.core.cmd.playera.PlayerAPack;
 import com.forge.core.cmd.playerb.PlayerBPack;
 import com.forge.core.cmd.systemsa.SystemsAPack;
@@ -65,6 +66,7 @@ public final class CommandRegistry {
         commands.addAll(ChatPack.commands(plugin));
         commands.addAll(StackPack.commands(plugin));
         commands.addAll(ItemsPack.commands(plugin));
+        commands.addAll(PermissionPack.commands(plugin));
         return commands;
     }
 
@@ -102,7 +104,7 @@ public final class CommandRegistry {
                 return;
             }
             String permission = command.permission();
-            if (!permission.isEmpty() && !sender.hasPermission(permission)) {
+            if (!permission.isEmpty() && !command.plugin.permissions().hasPermission(sender, permission)) {
                 Text.error(sender, "You don't have permission to do that.");
                 return;
             }
@@ -122,7 +124,7 @@ public final class CommandRegistry {
         @Override
         public Collection<String> suggest(CommandSourceStack stack, String[] args) {
             String permission = command.permission();
-            if (!permission.isEmpty() && !stack.getSender().hasPermission(permission)) {
+            if (!permission.isEmpty() && !command.plugin.permissions().hasPermission(stack.getSender(), permission)) {
                 return List.of();
             }
             try {

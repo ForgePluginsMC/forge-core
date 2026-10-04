@@ -8,6 +8,7 @@ import com.forge.core.data.KitManager;
 import com.forge.core.data.UserManager;
 import com.forge.core.data.WarpManager;
 import com.forge.core.economy.EconomyManager;
+import com.forge.core.permission.PermissionManager;
 import com.forge.core.help.HelpManager;
 import com.forge.core.punish.BanManager;
 import com.forge.core.teleport.TpaManager;
@@ -29,6 +30,7 @@ public final class ForgeCore extends JavaPlugin {
     private MuteManager mutes;
     private BanManager bans;
     private AfkManager afk;
+    private PermissionManager permissions;
     private HelpManager help;
     private com.forge.core.cmd.playerb.SavedItemsManager savedItems;
 
@@ -51,12 +53,14 @@ public final class ForgeCore extends JavaPlugin {
         mutes = new MuteManager(this);
         bans = new BanManager(this);
         afk = new AfkManager(this);
+        permissions = new PermissionManager(this);
         savedItems = new com.forge.core.cmd.playerb.SavedItemsManager(this);
 
         getServer().getPluginManager().registerEvents(new CoreListener(this), this);
         help = new HelpManager(this);
         CommandRegistry.registerAll(this);
         com.forge.core.economy.VaultHook.init(this);
+        com.forge.core.permission.PermissionHook.init(this);
 
         getLogger().info("ForgeCore enabled: " + CommandRegistry.count() + " commands registered.");
     }
@@ -80,6 +84,9 @@ public final class ForgeCore extends JavaPlugin {
         }
         if (bans != null) {
             bans.save();
+        }
+        if (permissions != null) {
+            permissions.save();
         }
         instance = null;
     }
@@ -118,6 +125,10 @@ public final class ForgeCore extends JavaPlugin {
 
     public AfkManager afk() {
         return afk;
+    }
+
+    public PermissionManager permissions() {
+        return permissions;
     }
 
     public HelpManager help() {
