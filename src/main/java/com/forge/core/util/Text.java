@@ -49,9 +49,12 @@ public final class Text {
         sender.sendMessage(MINI.deserialize(PREFIX + "<green>" + miniMessage));
     }
 
-    /** Standard usage hint: {@code Usage: /home [player]}. */
+    /** Clickable usage hint: subtle gray line; clicking fills the command in chat. */
     public static void usage(CommandSender sender, String usage) {
-        error(sender, "Usage: <gray>" + escape(usage));
+        String bare = usage.startsWith("/") ? usage.substring(1) : usage;
+        String command = bare.split("\\s+")[0];
+        sender.sendMessage(MINI.deserialize(PREFIX + "<gray>Usage: <click:suggest_command:'/"
+                + escape(command) + " '><white>" + escape(usage) + "</white></click></gray>"));
     }
 
     /** Broadcast a prefixed message to the whole server. */

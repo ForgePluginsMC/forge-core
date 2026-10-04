@@ -47,7 +47,7 @@ public final class MirrorCommand extends ForgeCommand {
     public void execute(CommandSender sender, String label, String[] args) {
         Player player = (Player) sender;
         if (args.length == 0) {
-            throw new CommandRegistry.CommandFailure("Usage: " + usage());
+            throw new CommandRegistry.CommandFailure("Missing arguments.");
         }
         String sub = args[0].toLowerCase(Locale.ROOT);
         MirrorManager manager = MirrorManager.get();

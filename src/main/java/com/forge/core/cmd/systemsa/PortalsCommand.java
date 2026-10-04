@@ -48,7 +48,7 @@ public final class PortalsCommand extends ForgeCommand {
     @Override
     public void execute(CommandSender sender, String label, String[] args) {
         if (args.length == 0) {
-            throw new CommandRegistry.CommandFailure("Usage: " + usage());
+            throw new CommandRegistry.CommandFailure("Missing arguments.");
         }
         String sub = args[0].toLowerCase(Locale.ROOT);
         PortalManager manager = PortalManager.get();
@@ -92,7 +92,7 @@ public final class PortalsCommand extends ForgeCommand {
             case "addcmd" -> {
                 Portal portal = existing(manager, arg(args, 1, "portal name"));
                 if (args.length < 3) {
-                    throw new CommandRegistry.CommandFailure("Usage: /portals addcmd <name> <command...>");
+                    throw new CommandRegistry.CommandFailure("Missing arguments.", "/portals addcmd <name> <command...>");
                 }
                 String command = String.join(" ", java.util.Arrays.copyOfRange(args, 2, args.length));
                 portal.commands.add(command);

@@ -4,13 +4,13 @@
 
 <h1 align="center">ForgeCore</h1>
 
-<p align="center"><i>The all-in-one essentials suite for Paper — 226 original commands across teleport, moderation, economy, player systems, world admin, portals, holograms, ranks, flight charges, schedules and network tools.</i></p>
+<p align="center"><i>The all-in-one essentials suite for Paper — 227 original commands across teleport, moderation, economy, player systems, world admin, portals, holograms, ranks, flight charges, schedules and network tools.</i></p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/version-1.0.0-ff7b2e?style=for-the-badge" alt="version 1.0.0">
   <img src="https://img.shields.io/badge/Paper-26.3-2f9e6e?style=for-the-badge" alt="Paper 26.3">
   <img src="https://img.shields.io/badge/Java-25-f89820?style=for-the-badge" alt="Java 25">
-  <img src="https://img.shields.io/badge/commands-226-2563eb?style=for-the-badge" alt="226 commands">
+  <img src="https://img.shields.io/badge/commands-227-2563eb?style=for-the-badge" alt="227 commands">
   <img src="https://img.shields.io/badge/deprecated_APIs-zero-10b981?style=for-the-badge" alt="zero deprecated APIs">
   <img src="https://img.shields.io/badge/dependencies-zero-6b7280?style=for-the-badge" alt="zero dependencies">
 </p>
@@ -38,10 +38,18 @@ An original implementation written from scratch for Paper 26.3. Zero runtime dep
 - **Schedules** — event-driven actions (first join, join, quit, death, respawn, teleport) plus interval and playtime-milestone triggers
 - **Network** — `/server`, `/sendall`, cross-network broadcast, server list via the BungeeCord channel
 - **Importers** — EssentialsX userdata/warps/kits import, legacy user-folder import
+- **Clickable help** — `/help forgecore` pages every command you can use, with clickable pagination and per-command detail; `/forgecore help` works from console too
+- **Usage hints** — every command error is followed by a clickable usage line that fills the command in chat
 
 ## Commands
 
 Every command defaults to permission `forgecore.<name>` (see [Permissions](#permissions) for the extras). Aliases are shown in parentheses.
+
+### Core (1)
+
+| Command | Description | Usage |
+|---|---|---|
+| `/forgecore` (/fc) | ForgeCore plugin info and command help. | `/forgecore help [page|command]` |
 
 ### Teleport (35)
 
@@ -309,6 +317,7 @@ Every command defaults to permission `forgecore.<name>` (see [Permissions](#perm
 | `/tablistupdate` | Force-refresh the animated tablist and player tab entries. | `/tablistupdate` |
 | `/viewrange` | Show or set a world's view distance. | `/viewrange [range] [world]` |
 
+<!-- total: 227 -->
 ## Permissions
 
 - Every command above defaults to `forgecore.<command>`.

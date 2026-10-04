@@ -40,7 +40,7 @@ public final class AliaseditorCommand extends ForgeCommand {
     @Override
     public void execute(CommandSender sender, String label, String[] args) {
         if (args.length == 0) {
-            throw new CommandRegistry.CommandFailure("Usage: " + usage());
+            throw new CommandRegistry.CommandFailure("Missing arguments.");
         }
         String sub = args[0].toLowerCase(Locale.ROOT);
         AliasManager manager = AliasManager.get();
@@ -59,10 +59,10 @@ public final class AliaseditorCommand extends ForgeCommand {
             }
             case "create" -> {
                 if (args.length < 2) {
-                    throw new CommandRegistry.CommandFailure("Usage: /aliaseditor create <alias> <command...>");
+                    throw new CommandRegistry.CommandFailure("Missing arguments.", "/aliaseditor create <alias> <command...>");
                 }
                 if (args.length < 3) {
-                    throw new CommandRegistry.CommandFailure("Usage: /aliaseditor create <alias> <command...>");
+                    throw new CommandRegistry.CommandFailure("Missing arguments.", "/aliaseditor create <alias> <command...>");
                 }
                 String alias = args[1];
                 String command = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
@@ -75,7 +75,7 @@ public final class AliaseditorCommand extends ForgeCommand {
             }
             case "delete" -> {
                 if (args.length < 2) {
-                    throw new CommandRegistry.CommandFailure("Usage: /aliaseditor delete <alias>");
+                    throw new CommandRegistry.CommandFailure("Missing arguments.", "/aliaseditor delete <alias>");
                 }
                 if (!manager.delete(args[1])) {
                     throw new CommandRegistry.CommandFailure(

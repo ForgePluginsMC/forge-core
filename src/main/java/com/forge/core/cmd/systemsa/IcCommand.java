@@ -50,7 +50,7 @@ public final class IcCommand extends ForgeCommand {
     @Override
     public void execute(CommandSender sender, String label, String[] args) {
         if (args.length == 0) {
-            throw new CommandRegistry.CommandFailure("Usage: " + usage());
+            throw new CommandRegistry.CommandFailure("Missing arguments.");
         }
         String sub = args[0].toLowerCase(Locale.ROOT);
         InteractiveManager manager = InteractiveManager.get();
@@ -101,7 +101,7 @@ public final class IcCommand extends ForgeCommand {
             case "addcmd" -> {
                 Interactive interactive = existing(manager, arg(args, 1, "binding name"));
                 if (args.length < 3) {
-                    throw new CommandRegistry.CommandFailure("Usage: /ic addcmd <name> <command...>");
+                    throw new CommandRegistry.CommandFailure("Missing arguments.", "/ic addcmd <name> <command...>");
                 }
                 String command = join(args, 2);
                 interactive.commands.add(command);

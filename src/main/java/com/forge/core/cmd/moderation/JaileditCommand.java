@@ -53,14 +53,14 @@ public final class JaileditCommand extends ForgeCommand {
                     return;
                 }
                 if (args.length < 2) {
-                    throw new CommandRegistry.CommandFailure("Usage: <gray>" + Text.escape("/jailedit create <name>"));
+                    throw new CommandRegistry.CommandFailure("Missing arguments.", "/jailedit create <name>");
                 }
                 plugin.jails().set(args[1], player.getLocation());
                 Text.ok(sender, "Jail <white>" + Text.escape(args[1]) + "</white> created at your location.");
             }
             case "delete" -> {
                 if (args.length < 2) {
-                    throw new CommandRegistry.CommandFailure("Usage: <gray>" + Text.escape("/jailedit delete <name>"));
+                    throw new CommandRegistry.CommandFailure("Missing arguments.", "/jailedit delete <name>");
                 }
                 if (plugin.jails().remove(args[1])) {
                     Text.ok(sender, "Jail <white>" + Text.escape(args[1]) + "</white> deleted.");

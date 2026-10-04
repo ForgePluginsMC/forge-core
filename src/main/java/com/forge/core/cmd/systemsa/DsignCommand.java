@@ -50,7 +50,7 @@ public final class DsignCommand extends ForgeCommand {
     public void execute(CommandSender sender, String label, String[] args) {
         Player player = (Player) sender;
         if (args.length == 0) {
-            throw new CommandRegistry.CommandFailure("Usage: " + usage());
+            throw new CommandRegistry.CommandFailure("Missing arguments.");
         }
         String sub = args[0].toLowerCase(Locale.ROOT);
         DynamicSignManager manager = DynamicSignManager.get();
@@ -65,7 +65,7 @@ public final class DsignCommand extends ForgeCommand {
             }
             case "create" -> {
                 if (args.length < 2) {
-                    throw new CommandRegistry.CommandFailure("Usage: /dsign create <name>");
+                    throw new CommandRegistry.CommandFailure("Missing arguments.", "/dsign create <name>");
                 }
                 String name = args[1];
                 Block target = targetSign(player);
@@ -81,7 +81,7 @@ public final class DsignCommand extends ForgeCommand {
             }
             case "delete" -> {
                 if (args.length < 2) {
-                    throw new CommandRegistry.CommandFailure("Usage: /dsign delete <name>");
+                    throw new CommandRegistry.CommandFailure("Missing arguments.", "/dsign delete <name>");
                 }
                 if (!manager.delete(args[1])) {
                     throw new CommandRegistry.CommandFailure(

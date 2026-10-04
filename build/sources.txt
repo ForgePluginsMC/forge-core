@@ -307,3 +307,7 @@
 /home/hatch/workspace/forge-core/src/main/java/com/forge/core/cmd/systemsb/CounterCommand.java
 /home/hatch/workspace/forge-core/src/main/java/com/forge/core/cmd/systemsb/ViewrangeCommand.java
 /home/hatch/workspace/forge-core/src/main/java/com/forge/core/vanish/VanishApi.java
+/home/hatch/workspace/forge-core/src/main/java/com/forge/core/help/package-info.java
+/home/hatch/workspace/forge-core/src/main/java/com/forge/core/help/HelpManager.java
+/home/hatch/workspace/forge-core/src/main/java/com/forge/core/help/HelpListener.java
+/home/hatch/workspace/forge-core/src/main/java/com/forge/core/help/ForgeCoreCommand.java

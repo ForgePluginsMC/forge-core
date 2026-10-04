@@ -9,6 +9,7 @@ import com.forge.core.cmd.playerb.PlayerBPack;
 import com.forge.core.cmd.systemsa.SystemsAPack;
 import com.forge.core.cmd.systemsb.SystemsBPack;
 import com.forge.core.cmd.teleport.TeleportPack;
+import com.forge.core.help.ForgeCoreCommand;
 import com.forge.core.util.Text;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
@@ -27,6 +28,7 @@ import org.jspecify.annotations.Nullable;
  */
 public final class CommandRegistry {
     private static int count;
+    private static List<ForgeCommand> registered = List.of();
 
     private CommandRegistry() {
     }
@@ -34,6 +36,11 @@ public final class CommandRegistry {
     /** Number of commands registered on the last enable. */
     public static int count() {
         return count;
+    }
+
+    /** Every command registered on the last enable (for help, etc.). */
+    public static List<ForgeCommand> commands() {
+        return registered;
     }
 
     /** Collect every command from every pack. */
@@ -47,6 +54,7 @@ public final class CommandRegistry {
         commands.addAll(AdminPack.commands(plugin));
         commands.addAll(SystemsAPack.commands(plugin));
         commands.addAll(SystemsBPack.commands(plugin));
+        commands.add(new ForgeCoreCommand(plugin));
         return commands;
     }
 
@@ -54,6 +62,7 @@ public final class CommandRegistry {
     public static void registerAll(ForgeCore plugin) {
         List<ForgeCommand> commands = all(plugin);
         count = commands.size();
+        registered = List.copyOf(commands);
         plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, event -> {
             Commands registrar = event.registrar();
             for (ForgeCommand command : commands) {
@@ -91,6 +100,8 @@ public final class CommandRegistry {
                 command.execute(sender, command.name(), args);
             } catch (CommandFailure failure) {
                 Text.error(sender, failure.getMessage());
+                String usage = failure.usageOverride() != null ? failure.usageOverride() : command.usage();
+                Text.usage(sender, usage);
             } catch (Exception exception) {
                 Text.error(sender, "Something went wrong running that command.");
                 command.plugin.getLogger().warning(
@@ -120,11 +131,25 @@ public final class CommandRegistry {
 
     /**
      * Throw from {@link ForgeCommand#execute} to abort with a clean
-     * user-facing error message.
+     * user-facing error message. The command's usage hint is shown
+     * automatically after the message; pass {@code usageOverride} for a
+     * more specific usage line (e.g. a subcommand's syntax).
      */
     public static final class CommandFailure extends RuntimeException {
+        private final @Nullable String usageOverride;
+
         public CommandFailure(String message) {
+            this(message, null);
+        }
+
+        public CommandFailure(String message, @Nullable String usageOverride) {
             super(message);
+            this.usageOverride = usageOverride;
+        }
+
+        /** Specific usage line to show instead of the command's {@code usage()}. */
+        public @Nullable String usageOverride() {
+            return usageOverride;
         }
     }
 }

@@ -45,7 +45,7 @@ public final class HologramCommand extends ForgeCommand {
     @Override
     public void execute(CommandSender sender, String label, String[] args) {
         if (args.length == 0) {
-            throw new CommandRegistry.CommandFailure("Usage: " + usage());
+            throw new CommandRegistry.CommandFailure("Missing arguments.");
         }
         String sub = args[0].toLowerCase(Locale.ROOT);
         HologramManager manager = HologramManager.get();
@@ -78,7 +78,7 @@ public final class HologramCommand extends ForgeCommand {
             case "addline" -> {
                 Hologram hologram = existing(manager, arg(args, 1, "hologram name"));
                 if (args.length < 3) {
-                    throw new CommandRegistry.CommandFailure("Usage: /hologram addline <name> <text...>");
+                    throw new CommandRegistry.CommandFailure("Missing arguments.", "/hologram addline <name> <text...>");
                 }
                 manager.addLine(hologram, join(args, 2));
                 Text.ok(sender, "Line added to <white>" + Text.escape(hologram.name) + "</white>.");
@@ -87,7 +87,7 @@ public final class HologramCommand extends ForgeCommand {
                 Hologram hologram = existing(manager, arg(args, 1, "hologram name"));
                 int index = parseIndex(args, 2, hologram.lines.size());
                 if (args.length < 4) {
-                    throw new CommandRegistry.CommandFailure("Usage: /hologram setline <name> <line#> <text...>");
+                    throw new CommandRegistry.CommandFailure("Missing arguments.", "/hologram setline <name> <line#> <text...>");
                 }
                 manager.setLine(hologram, index, join(args, 3));
                 Text.ok(sender, "Line <white>" + (index + 1) + "</white> updated.");

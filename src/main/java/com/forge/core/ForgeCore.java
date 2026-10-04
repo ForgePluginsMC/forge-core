@@ -8,6 +8,7 @@ import com.forge.core.data.KitManager;
 import com.forge.core.data.UserManager;
 import com.forge.core.data.WarpManager;
 import com.forge.core.economy.EconomyManager;
+import com.forge.core.help.HelpManager;
 import com.forge.core.punish.BanManager;
 import com.forge.core.teleport.TpaManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -28,6 +29,7 @@ public final class ForgeCore extends JavaPlugin {
     private MuteManager mutes;
     private BanManager bans;
     private AfkManager afk;
+    private HelpManager help;
 
     /** Global accessor for command implementations. */
     public static ForgeCore get() {
@@ -50,6 +52,7 @@ public final class ForgeCore extends JavaPlugin {
         afk = new AfkManager(this);
 
         getServer().getPluginManager().registerEvents(new CoreListener(this), this);
+        help = new HelpManager(this);
         CommandRegistry.registerAll(this);
 
         getLogger().info("ForgeCore enabled: " + CommandRegistry.count() + " commands registered.");
@@ -112,5 +115,9 @@ public final class ForgeCore extends JavaPlugin {
 
     public AfkManager afk() {
         return afk;
+    }
+
+    public HelpManager help() {
+        return help;
     }
 }
