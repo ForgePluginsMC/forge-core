@@ -28,7 +28,7 @@ import org.jspecify.annotations.Nullable;
  * </ul>
  */
 @NullMarked
-public final class HubGui extends WebGui {
+public final class HubGui extends GlyphGui {
     /** Glyph font for menu pages. */
     private static final Key GLYPH_FONT = Key.key("minecraft:forge_cards");
 
@@ -101,13 +101,9 @@ public final class HubGui extends WebGui {
         // Header is baked into the title glyph.
     }
 
-    /** Create an invisible click-target item with no tooltip. */
-    private static GuiItem ghost(Consumer<Player> action) {
-        return GuiItem.of(Material.PAPER)
-                .model(ForgeIcons.INVISIBLE)
-                .hideTooltip()
-                .name(" ")
-                .action(action);
+    @Override
+    protected String glyphChar() {
+        return PAGE_GLYPHS[page];
     }
 
     @Override
