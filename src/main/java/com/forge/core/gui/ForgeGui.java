@@ -101,6 +101,8 @@ public abstract class ForgeGui implements InventoryHolder {
         this.inventory = inv;
         GuiManager.get().track(player, this);
         player.openInventory(inv);
+        // Force client to refresh the bottom inventory view (hotbar nav items).
+        player.updateInventory();
     }
 
     /** Rebuild and reopen for the same viewer. */
