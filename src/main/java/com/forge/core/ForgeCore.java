@@ -8,9 +8,12 @@ import com.forge.core.data.KitManager;
 import com.forge.core.data.UserManager;
 import com.forge.core.data.WarpManager;
 import com.forge.core.economy.EconomyManager;
+import com.forge.core.guild.GuildManager;
 import com.forge.core.permission.PermissionManager;
 import com.forge.core.help.HelpManager;
 import com.forge.core.punish.BanManager;
+import com.forge.core.quest.QuestGui;
+import com.forge.core.quest.QuestManager;
 import com.forge.core.teleport.TpaManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -25,6 +28,7 @@ public final class ForgeCore extends JavaPlugin {
     private WarpManager warps;
     private KitManager kits;
     private EconomyManager economy;
+    private GuildManager guilds;
     private JailManager jails;
     private TpaManager tpa;
     private MuteManager mutes;
@@ -33,6 +37,10 @@ public final class ForgeCore extends JavaPlugin {
     private PermissionManager permissions;
     private HelpManager help;
     private com.forge.core.cmd.playerb.SavedItemsManager savedItems;
+    private QuestManager quests;
+    private QuestGui questGui;
+    private com.forge.core.dialog.DialogManager dialogs;
+    private com.forge.core.dialog.NpcManager npcs;
 
     /** Global accessor for command implementations. */
     public static ForgeCore get() {
@@ -48,6 +56,7 @@ public final class ForgeCore extends JavaPlugin {
         warps = new WarpManager(this);
         kits = new KitManager(this);
         economy = new EconomyManager(this);
+        guilds = new GuildManager(this);
         jails = new JailManager(this);
         tpa = new TpaManager(this);
         mutes = new MuteManager(this);
@@ -55,8 +64,15 @@ public final class ForgeCore extends JavaPlugin {
         afk = new AfkManager(this);
         permissions = new PermissionManager(this);
         savedItems = new com.forge.core.cmd.playerb.SavedItemsManager(this);
+        quests = new QuestManager(this);
+        questGui = new QuestGui(quests);
+        dialogs = new com.forge.core.dialog.DialogManager(this);
+        npcs = new com.forge.core.dialog.NpcManager(this);
 
         getServer().getPluginManager().registerEvents(new CoreListener(this), this);
+        getServer().getPluginManager().registerEvents(questGui, this);
+        getServer().getPluginManager().registerEvents(
+                new com.forge.core.dialog.NpcListener(this), this);
         help = new HelpManager(this);
         CommandRegistry.registerAll(this);
         com.forge.core.economy.VaultHook.init(this);
@@ -78,6 +94,9 @@ public final class ForgeCore extends JavaPlugin {
         }
         if (economy != null) {
             economy.save();
+        }
+        if (guilds != null) {
+            guilds.save();
         }
         if (jails != null) {
             jails.save();
@@ -105,6 +124,10 @@ public final class ForgeCore extends JavaPlugin {
 
     public EconomyManager economy() {
         return economy;
+    }
+
+    public GuildManager guilds() {
+        return guilds;
     }
 
     public JailManager jails() {
@@ -137,5 +160,21 @@ public final class ForgeCore extends JavaPlugin {
 
     public com.forge.core.cmd.playerb.SavedItemsManager savedItems() {
         return savedItems;
+    }
+
+    public QuestManager quests() {
+        return quests;
+    }
+
+    public QuestGui questGui() {
+        return questGui;
+    }
+
+    public com.forge.core.dialog.DialogManager dialogs() {
+        return dialogs;
+    }
+
+    public com.forge.core.dialog.NpcManager npcs() {
+        return npcs;
     }
 }

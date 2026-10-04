@@ -90,3 +90,18 @@ flightcharge:
 
 # Random teleport defaults per world (managed by /setrt).
 rtp: {}
+
+# Guilds: cost to found a guild (charged to the founder, 0 to disable).
+guild-create-cost: 1000.0
+# Cost per claimed chunk (charged to the guild bank, 0 to disable).
+guild-claim-cost: 100.0
+# Max chunks a guild may claim.
+guild-max-claims: 25
+# Max members per guild.
+guild-max-members: 20
+# Guild war duration in minutes.
+guild-war-minutes: 10
+# Seconds a war challenge stays open.
+guild-war-challenge-seconds: 300
+# Prize taken from the loser's guild bank (capped by their balance).
+guild-war-prize: 500.0

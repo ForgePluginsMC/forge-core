@@ -7,6 +7,7 @@ import com.forge.core.cmd.moderation.ModerationPack;
 import com.forge.core.cmd.permission.PermissionPack;
 import com.forge.core.cmd.playera.PlayerAPack;
 import com.forge.core.cmd.playerb.PlayerBPack;
+import com.forge.core.cmd.quest.QuestPack;
 import com.forge.core.cmd.systemsa.SystemsAPack;
 import com.forge.core.cmd.systemsb.SystemsBPack;
 import com.forge.core.cmd.teleport.TeleportPack;
@@ -67,6 +68,9 @@ public final class CommandRegistry {
         commands.addAll(StackPack.commands(plugin));
         commands.addAll(ItemsPack.commands(plugin));
         commands.addAll(PermissionPack.commands(plugin));
+        commands.addAll(com.forge.core.guild.GuildPack.commands(plugin));
+        commands.addAll(QuestPack.commands(plugin));
+        commands.addAll(com.forge.core.cmd.dialog.DialogPack.commands(plugin));
         return commands;
     }
 

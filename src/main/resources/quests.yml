@@ -1,0 +1,222 @@
+# ForgeCore quests — define your quests here.
+# Each quest:
+#   name: display name
+#   description: shown in GUI and /quest info
+#   type: NORMAL, DAILY, or WEEKLY
+#   requires: list of quest ids that must be completed first (optional)
+#   stages: ordered list of stages; each stage has objectives and a reward
+#
+# Each objective:
+#   stat: a vanilla Statistic name (untyped only — see /stats)
+#   target: how much progress counts (measured from quest start)
+#   description: player-facing text
+#
+# Each reward:
+#   money: dollars (optional)
+#   xp: XP levels (optional)
+#   items: list of {material, amount, name} (optional)
+#   commands: console commands, %player% = player name (optional)
+
+quests:
+  first_blood:
+    name: "First Blood"
+    description: "Slay 10 hostile mobs."
+    type: NORMAL
+    stages:
+      hunt:
+        name: "The Hunt Begins"
+        objectives:
+          - stat: MOB_KILLS
+            target: 10
+            description: "Kill 10 mobs"
+        reward:
+          money: 50
+          xp: 2
+
+  monster_hunter:
+    name: "Monster Hunter"
+    description: "Prove yourself against the darkness. Slay 50 mobs."
+    type: NORMAL
+    requires: [first_blood]
+    stages:
+      hunt:
+        name: "Seasoned Slayer"
+        objectives:
+          - stat: MOB_KILLS
+            target: 50
+            description: "Kill 50 mobs"
+        reward:
+          money: 200
+          xp: 5
+          items:
+            - material: IRON_SWORD
+              amount: 1
+              name: "<gold>Hunter's Blade"
+
+  duelist:
+    name: "Duelist"
+    description: "Defeat 5 players in combat."
+    type: NORMAL
+    stages:
+      combat:
+        name: "Trial by Combat"
+        objectives:
+          - stat: PLAYER_KILLS
+            target: 5
+            description: "Kill 5 players"
+        reward:
+          money: 500
+          items:
+            - material: DIAMOND_SWORD
+              amount: 1
+
+  wanderer:
+    name: "Wanderer"
+    description: "Walk 10 kilometers."
+    type: NORMAL
+    stages:
+      journey:
+        name: "On Foot"
+        objectives:
+          - stat: WALK_ONE_CM
+            target: 1000000
+            description: "Walk 10 km"
+        reward:
+          money: 100
+          xp: 3
+
+  skyward:
+    name: "Skyward"
+    description: "Fly 5 kilometers with an elytra."
+    type: NORMAL
+    requires: [wanderer]
+    stages:
+      flight:
+        name: "Take Flight"
+        objectives:
+          - stat: AVIATE_ONE_CM
+            target: 500000
+            description: "Fly 5 km"
+        reward:
+          money: 300
+          items:
+            - material: FIREWORK_ROCKET
+              amount: 16
+
+  spelunker:
+    name: "Spelunker"
+    description: "Open 25 chests and sleep through the night."
+    type: NORMAL
+    stages:
+      explore:
+        name: "Delve Deep"
+        objectives:
+          - stat: CHEST_OPENED
+            target: 25
+            description: "Open 25 chests"
+          - stat: SLEEP_IN_BED
+            target: 1
+            description: "Sleep in a bed"
+        reward:
+          money: 150
+          items:
+            - material: TORCH
+              amount: 32
+
+  blacksmith:
+    name: "Blacksmith"
+    description: "Use the furnace 20 times and the anvil 5 times."
+    type: NORMAL
+    stages:
+      forge:
+        name: "Fire and Iron"
+        objectives:
+          - stat: FURNACE_INTERACTION
+            target: 20
+            description: "Use a furnace 20 times"
+          - stat: INTERACT_WITH_ANVIL
+            target: 5
+            description: "Use an anvil 5 times"
+        reward:
+          money: 120
+          items:
+            - material: IRON_INGOT
+              amount: 16
+
+  survivor:
+    name: "Survivor"
+    description: "Play for 2 hours total. Time flies when you're having fun."
+    type: NORMAL
+    stages:
+      endurance:
+        name: "Endurance"
+        objectives:
+          - stat: PLAY_ONE_MINUTE
+            target: 144000
+            description: "Play for 2 hours"
+        reward:
+          money: 250
+          xp: 10
+
+  daily_hunt:
+    name: "Daily Hunt"
+    description: "Kill 15 mobs today."
+    type: DAILY
+    stages:
+      hunt:
+        name: "Daily Hunt"
+        objectives:
+          - stat: MOB_KILLS
+            target: 15
+            description: "Kill 15 mobs"
+        reward:
+          money: 75
+
+  daily_traveler:
+    name: "Daily Traveler"
+    description: "Walk 2 kilometers today."
+    type: DAILY
+    stages:
+      walk:
+        name: "Daily Walk"
+        objectives:
+          - stat: WALK_ONE_CM
+            target: 200000
+            description: "Walk 2 km"
+        reward:
+          money: 50
+
+  weekly_warrior:
+    name: "Weekly Warrior"
+    description: "Kill 100 mobs this week."
+    type: WEEKLY
+    stages:
+      war:
+        name: "Week of War"
+        objectives:
+          - stat: MOB_KILLS
+            target: 100
+            description: "Kill 100 mobs"
+        reward:
+          money: 400
+          xp: 8
+
+  weekly_explorer:
+    name: "Weekly Explorer"
+    description: "Open 50 chests and walk 10 km this week."
+    type: WEEKLY
+    stages:
+      explore:
+        name: "Grand Expedition"
+        objectives:
+          - stat: CHEST_OPENED
+            target: 50
+            description: "Open 50 chests"
+          - stat: WALK_ONE_CM
+            target: 1000000
+            description: "Walk 10 km"
+        reward:
+          money: 500
+          items:
+            - material: ENDER_PEARL
+              amount: 8
