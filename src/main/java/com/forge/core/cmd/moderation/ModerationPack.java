@@ -63,6 +63,10 @@ public final class ModerationPack {
         commands.add(new UnmuteCommand(plugin));
         commands.add(new KickallCommand(plugin));
         commands.add(new BanlistCommand(plugin));
+        commands.add(new WarnCommand(plugin));
+        commands.add(new WarningsCommand(plugin));
+        commands.add(new SignspyCommand(plugin));
+        commands.add(new BurnCommand(plugin));
         return commands;
     }
 }

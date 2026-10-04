@@ -71,6 +71,8 @@ public final class PlayerBPack {
         commands.add(new MsgtoggleCommand(plugin));
         commands.add(new RealnameCommand(plugin));
         commands.add(new ItemdbCommand(plugin));
+        commands.add(new ToastCommand(plugin));
+        commands.add(new SaveditemsCommand(plugin));
         return commands;
     }
 }

@@ -72,6 +72,13 @@ public final class PlayerAPack {
         commands.add(new FireballCommand(plugin));
         commands.add(new NukeCommand(plugin));
         commands.add(new UnlimitedCommand(plugin));
+        commands.add(new SkinCommand(plugin));
+        commands.add(new NameplateCommand(plugin));
+        commands.add(new ShootCommand(plugin));
+        commands.add(new DyeCommand(plugin));
+        commands.add(new NotargetCommand(plugin));
+        commands.add(new AfkcheckCommand(plugin));
+        commands.add(new TogglecompassCommand(plugin));
         return commands;
     }
 }

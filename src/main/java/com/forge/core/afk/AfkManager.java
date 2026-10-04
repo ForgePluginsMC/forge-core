@@ -23,6 +23,7 @@ public final class AfkManager implements Listener {
     private final ForgeCore plugin;
     private final Map<UUID, Long> lastActive = new ConcurrentHashMap<>();
     private final Set<UUID> afk = ConcurrentHashMap.newKeySet();
+    private final Map<UUID, Long> afkSince = new ConcurrentHashMap<>();
 
     public AfkManager(ForgeCore plugin) {
         this.plugin = plugin;
@@ -73,16 +74,24 @@ public final class AfkManager implements Listener {
             if (afk.add(uuid) && plugin.getConfig().getBoolean("afk-broadcast", true)) {
                 Text.broadcast("<gray>" + Text.escape(player.getName()) + " is now AFK.");
             }
+            afkSince.put(uuid, System.currentTimeMillis());
         } else {
             afk.remove(uuid);
+            afkSince.remove(uuid);
             lastActive.put(uuid, System.currentTimeMillis());
         }
+    }
+
+    /** Epoch millis when the player went AFK, or -1 when not AFK. */
+    public long afkSinceMillis(Player player) {
+        return afkSince.getOrDefault(player.getUniqueId(), -1L);
     }
 
     /** Drop AFK state when a player leaves. */
     public void forget(Player player) {
         UUID uuid = player.getUniqueId();
         afk.remove(uuid);
+        afkSince.remove(uuid);
         lastActive.remove(uuid);
     }
 

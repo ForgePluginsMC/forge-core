@@ -32,6 +32,7 @@ public final class SystemsAPack {
         commands.add(new IcCommand(plugin));
         commands.add(new AttachcommandCommand(plugin));
         commands.add(new AliaseditorCommand(plugin));
+        commands.add(new CustomrecipeCommand(plugin));
         return commands;
     }
 }

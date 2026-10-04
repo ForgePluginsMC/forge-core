@@ -54,6 +54,9 @@ public final class TeleportPack {
         commands.add(new ListCommand(plugin));
         commands.add(new PointCommand(plugin));
         commands.add(new LaunchCommand(plugin));
+        commands.add(new TpoCommand(plugin));
+        commands.add(new TpohereCommand(plugin));
+        commands.add(new WorldCommand(plugin));
         return commands;
     }
 }

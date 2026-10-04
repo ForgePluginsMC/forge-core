@@ -16,6 +16,8 @@ import com.forge.core.cmd.systemsa.sc.SignCopyManager;
  * and tasks in their constructors.
  */
 public final class SystemsASetup {
+    private static CustomRecipeGui customRecipes;
+
     private SystemsASetup() {
     }
 
@@ -30,5 +32,10 @@ public final class SystemsASetup {
         new InteractiveManager(plugin);
         new AttachManager(plugin);
         new AliasManager(plugin);
+        customRecipes = new CustomRecipeGui(plugin);
+    }
+
+    public static CustomRecipeGui customRecipes() {
+        return customRecipes;
     }
 }

@@ -30,6 +30,7 @@ public final class ForgeCore extends JavaPlugin {
     private BanManager bans;
     private AfkManager afk;
     private HelpManager help;
+    private com.forge.core.cmd.playerb.SavedItemsManager savedItems;
 
     /** Global accessor for command implementations. */
     public static ForgeCore get() {
@@ -50,6 +51,7 @@ public final class ForgeCore extends JavaPlugin {
         mutes = new MuteManager(this);
         bans = new BanManager(this);
         afk = new AfkManager(this);
+        savedItems = new com.forge.core.cmd.playerb.SavedItemsManager(this);
 
         getServer().getPluginManager().registerEvents(new CoreListener(this), this);
         help = new HelpManager(this);
@@ -120,5 +122,9 @@ public final class ForgeCore extends JavaPlugin {
 
     public HelpManager help() {
         return help;
+    }
+
+    public com.forge.core.cmd.playerb.SavedItemsManager savedItems() {
+        return savedItems;
     }
 }
