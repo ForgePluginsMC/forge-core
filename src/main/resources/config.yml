@@ -1,0 +1,72 @@
+# ForgeCore configuration
+# MiniMessage formatting is supported in motd and message templates.
+
+# Message of the day shown on join (blank to disable).
+motd: "<gold>Welcome to the server, <white>%player_name%<gold>!"
+
+# Currency symbol used by the economy.
+currency-symbol: "$"
+# Balance given to first-time players.
+starting-balance: 100.0
+
+# Seconds before an inactive player is marked AFK (0 to disable).
+afk-seconds: 300
+# Broadcast "<player> is now AFK" messages.
+afk-broadcast: true
+
+# Teleport request expiry in seconds.
+tpa-timeout-seconds: 60
+
+# Max homes per player (permission forgecore.home.unlimited bypasses).
+max-homes: 5
+
+# Teleport to the world spawn on first join.
+first-spawn:
+  teleport: true
+
+# Warmup before /rtp and /spawn teleports (seconds, 0 to disable).
+teleport-warmup-seconds: 0
+
+# Enchantments disabled server-wide (namespaced keys, e.g. minecraft:sharpness).
+disabled-enchants: []
+
+# Exp levels charged per /repair (0 = free).
+repair-cost-levels: 0
+
+# Maintenance mode flag (toggled by /maintenance).
+maintenance: false
+# UUIDs that may join during maintenance.
+maintenance-bypass: []
+
+# Dynamic sign refresh interval in seconds.
+dsign-interval-seconds: 30
+
+# Animated tablist.
+tablist:
+  header-frames:
+    - "<gradient:#ff7b2e:#ffb347><bold>ForgeCore</bold></gradient>"
+    - "<gradient:#ffb347:#ff7b2e><bold>ForgeCore</bold></gradient>"
+  footer-frames:
+    - "<gray>playtime: %forgecore_playtime%  |  balance: %forgecore_balance%</gray>"
+  # Ticks between frame advances (100 = 5 seconds).
+  interval-ticks: 100
+
+# Rank ladder auto-promotion (see plugins/ForgeCore/ranks.yml).
+ranks:
+  auto: false
+
+# Flight charges (see /flightcharge).
+flightcharge:
+  # Max charges a player can hold.
+  max: 3600.0
+  # Charges drained per minute of flight.
+  drain-per-minute: 60.0
+  # Charges granted per exp level via /flightcharge expcharge.
+  exp-rate: 10.0
+  # Charges granted per unit of currency via /flightcharge moneycharge.
+  money-rate: 1.0
+  # Currency cost per charge when using /flightcharge recharge.
+  recharge-cost: 0.1
+
+# Random teleport defaults per world (managed by /setrt).
+rtp: {}
