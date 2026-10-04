@@ -27,6 +27,14 @@ public final class ForgeIcons {
     /** Fully transparent item texture for glyph-menu click targets. */
     public static final String INVISIBLE = "forge_invisible";
 
+    // Bright button tiles for dynamic list entries
+    public static final String TILE_BASE = "forge_tile_base";
+    public static final String TILE_GREEN = "forge_tile_green";
+    public static final String TILE_GOLD = "forge_tile_gold";
+    public static final String TILE_YELLOW = "forge_tile_yellow";
+    public static final String TILE_GRAY = "forge_tile_gray";
+    public static final String TILE_RED = "forge_tile_red";
+
     // Status
     public static final String STATUS_ONLINE = "forge_status_online";
     public static final String STATUS_OFFLINE = "forge_status_offline";

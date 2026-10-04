@@ -4,6 +4,7 @@ import com.forge.core.util.Text;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -21,9 +22,26 @@ import org.jspecify.annotations.Nullable;
 
 /**
  * Quest GUI: browse available quests, view progress, and start/abandon them.
+ *
+ * <p>Glyph-rendered background (forge_cards font); quest entries use bright
+ * button tiles color-coded by status.
  */
 @NullMarked
 public final class QuestGui implements Listener {
+    /** Glyph font for menu art. */
+    private static final Key GLYPH_FONT = Key.key("minecraft:forge_cards");
+    /** Negative-space prefix aligning the glyph to the container edge. */
+    private static final String ALIGN_LEFT = "\uF803";
+    /** Quests list background glyph. */
+    private static final String GLYPH = ALIGN_LEFT + "\uE118";
+
+    /** Tile model keys (custom_model_data) for quest status. */
+    private static final String TILE_GREEN = "forge_tile_green";
+    private static final String TILE_GOLD = "forge_tile_gold";
+    private static final String TILE_YELLOW = "forge_tile_yellow";
+    private static final String TILE_GRAY = "forge_tile_gray";
+    private static final String TILE_INVISIBLE = "forge_invisible";
+
     private final QuestManager manager;
 
     public QuestGui(QuestManager manager) {
@@ -53,15 +71,42 @@ public final class QuestGui implements Listener {
         }
     }
 
+    /** Build an invisible filler item (no tooltip). */
+    private static ItemStack invisibleFiller() {
+        ItemStack item = new ItemStack(Material.PAPER);
+        ItemMeta meta = item.getItemMeta();
+        meta.displayName(Component.text(" "));
+        meta.setHideTooltip(true);
+        var cmd = meta.getCustomModelDataComponent();
+        cmd.setStrings(List.of(TILE_INVISIBLE));
+        meta.setCustomModelDataComponent(cmd);
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    /** Build a tile item with the given model key, name, and lore. */
+    private static ItemStack tileItem(String modelKey, Component name, List<Component> lore) {
+        ItemStack item = new ItemStack(Material.PAPER);
+        ItemMeta meta = item.getItemMeta();
+        meta.displayName(name);
+        meta.lore(lore);
+        var cmd = meta.getCustomModelDataComponent();
+        cmd.setStrings(List.of(modelKey));
+        meta.setCustomModelDataComponent(cmd);
+        item.setItemMeta(meta);
+        return item;
+    }
+
     /** Open the quest browser for a player. */
     public void open(Player player) {
         List<Quest> quests = manager.all();
         int size = 54;
         Holder holder = new Holder(player.getUniqueId());
-        Inventory inv = Bukkit.createInventory(holder, size, Text.of("<gold><bold>Quests"));
+        Inventory inv = Bukkit.createInventory(holder, size,
+                Component.text(GLYPH).font(GLYPH_FONT));
         holder.setInventory(inv);
 
-        ItemStack filler = named(new ItemStack(Material.BLACK_STAINED_GLASS_PANE), Component.empty());
+        ItemStack filler = invisibleFiller();
         for (int slot = 0; slot < size; slot++) {
             inv.setItem(slot, filler);
         }
@@ -86,19 +131,19 @@ public final class QuestGui implements Listener {
         boolean started = manager.isStarted(player, quest.id());
         boolean canStart = manager.canStart(player, quest);
 
-        Material icon;
+        String tile;
         String prefix;
         if (complete) {
-            icon = Material.EMERALD;
+            tile = TILE_GREEN;
             prefix = "<green>\u2714 ";
         } else if (started) {
-            icon = Material.GOLD_INGOT;
+            tile = TILE_GOLD;
             prefix = "<gold>\u25b6 ";
         } else if (canStart) {
-            icon = Material.BOOK;
+            tile = TILE_YELLOW;
             prefix = "<yellow>\u25cb ";
         } else {
-            icon = Material.BARRIER;
+            tile = TILE_GRAY;
             prefix = "<gray>\ud83d\udd12 ";
         }
 
@@ -144,19 +189,7 @@ public final class QuestGui implements Listener {
             lore.add(Text.of("<gray>Complete prerequisites first."));
         }
 
-        return named(new ItemStack(icon), Text.of(prefix + quest.name()), lore);
-    }
-
-    private static ItemStack named(ItemStack item, Component name) {
-        return named(item, name, List.of());
-    }
-
-    private static ItemStack named(ItemStack item, Component name, List<Component> lore) {
-        ItemMeta meta = item.getItemMeta();
-        meta.displayName(name);
-        meta.lore(lore);
-        item.setItemMeta(meta);
-        return item;
+        return tileItem(tile, Text.of(prefix + quest.name()), lore);
     }
 
     @EventHandler
@@ -177,17 +210,16 @@ public final class QuestGui implements Listener {
         }
 
         ItemStack clicked = event.getCurrentItem();
-        if (clicked == null || clicked.getType() == Material.BLACK_STAINED_GLASS_PANE) {
+        if (clicked == null || clicked.getType() != Material.PAPER) {
             return;
+        }
+        ItemMeta meta = clicked.getItemMeta();
+        if (meta == null || !meta.hasDisplayName() || meta.isHideTooltip()) {
+            return; // filler
         }
 
         // Find which quest was clicked by matching the name
-        ItemMeta meta = clicked.getItemMeta();
-        if (meta == null || !meta.hasDisplayName()) {
-            return;
-        }
         String displayName = Text.strip(meta.displayName().toString());
-        // Extract quest name by stripping prefix symbols
         for (Quest quest : manager.all()) {
             if (displayName.contains(quest.name())) {
                 handleQuestClick(player, quest, event.isShiftClick());
@@ -212,7 +244,7 @@ public final class QuestGui implements Listener {
 
     @EventHandler
     public void onDrag(InventoryDragEvent event) {
-        if (event.getInventory().getHolder() instanceof Holder) {
+        if (event.getView().getTopInventory().getHolder() instanceof Holder) {
             event.setCancelled(true);
         }
     }

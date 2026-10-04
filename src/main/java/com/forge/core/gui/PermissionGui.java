@@ -5,25 +5,28 @@ import com.forge.core.permission.Group;
 import com.forge.core.util.Text;
 import java.util.ArrayList;
 import java.util.List;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 /**
  * Permission group browser: click a group for details and actions.
+ *
+ * <p>Glyph-rendered background with bright button tiles.
  */
 @NullMarked
-public final class PermissionGui extends WebGui {
-    private static final MiniMessage MM = MiniMessage.miniMessage();
+public final class PermissionGui extends GlyphGui {
     private final ForgeCore plugin;
     private final WebGui parent;
 
     public PermissionGui(ForgeCore plugin, WebGui parent) {
         this.plugin = plugin;
         this.parent = parent;
+    }
+
+    @Override
+    protected String glyphChar() {
+        return "\uE117";
     }
 
     @Override
@@ -49,21 +52,27 @@ public final class PermissionGui extends WebGui {
                 continue;
             }
             int permCount = plugin.permissions().groups().effectivePermissions(name).size();
-            set(slots[i], GuiItem.of(Material.PAPER)
-                    .name("<blue>" + Text.escape(name))
-                    .lore(
-                            "<gray>Permissions: <white>" + permCount,
+            set(slots[i], tile(ForgeIcons.TILE_BASE,
+                    "<blue><bold>" + Text.escape(name),
+                    List.of("<gray>Permissions: <white>" + permCount,
                             "<gray>Weight: <white>" + group.weight(),
                             "<gray>Prefix: <white>" + Text.escape(group.prefix()),
-                            "",
-                            "<green>Click for details")
-                    .action(p -> runCommand(p, "group info " + name)));
+                            "", "<green>Click for details"),
+                    p -> runCommand(p, "group info " + name)));
         }
 
-        set(49, GuiItem.of(Material.NAME_TAG)
-                .name("<green>Create Group")
-                .lore("<gray>Create a new permission group.", "", "<yellow>Click to enter name")
-                .action(p -> runCommandWithInput(p, "Type the group name:", "group create")));
+        if (names.isEmpty()) {
+            set(22, tile(ForgeIcons.TILE_GRAY, "<gray>No groups yet",
+                    List.of("<dark_gray>Create one below."), p -> {}));
+        }
     }
 
+    @Override
+    protected void buildFooter(Player viewer) {
+        super.buildFooter(viewer);
+        set(47, tile(ForgeIcons.TILE_GREEN, "<green><bold>Create Group",
+                List.of("<gray>Create a new permission group.",
+                        "", "<yellow>Click to enter name"),
+                p -> runCommandWithInput(p, "Type the group name:", "group create")));
+    }
 }

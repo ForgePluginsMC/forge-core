@@ -5,8 +5,6 @@ import com.forge.core.data.KitManager;
 import com.forge.core.util.Text;
 import java.util.ArrayList;
 import java.util.List;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -15,16 +13,22 @@ import org.jspecify.annotations.Nullable;
 
 /**
  * Kit browser: preview contents, click to claim.
+ *
+ * <p>Glyph-rendered background; kit preview icons kept as meaningful visuals.
  */
 @NullMarked
-public final class KitGui extends WebGui {
-    private static final MiniMessage MM = MiniMessage.miniMessage();
+public final class KitGui extends GlyphGui {
     private final ForgeCore plugin;
     private final WebGui parent;
 
     public KitGui(ForgeCore plugin, WebGui parent) {
         this.plugin = plugin;
         this.parent = parent;
+    }
+
+    @Override
+    protected String glyphChar() {
+        return "\uE113";
     }
 
     @Override
@@ -72,7 +76,6 @@ public final class KitGui extends WebGui {
             } else {
                 lore.add("<red>Available in " + formatCooldown(remaining));
             }
-            // Preview first few items.
             lore.add("<dark_gray>Contains:");
             for (int j = 0; j < Math.min(3, items.size()); j++) {
                 ItemStack item = items.get(j);
@@ -81,13 +84,23 @@ public final class KitGui extends WebGui {
                 }
             }
 
-            GuiItem guiItem = GuiItem.of(ready ? icon : Material.GRAY_DYE)
-                    .name((ready ? "<gold>" : "<gray>") + Text.escape(name))
-                    .lore(lore);
+            // Tile-styled item: use the kit's preview icon when ready.
+            GuiItem guiItem;
             if (ready) {
+                guiItem = GuiItem.of(icon)
+                        .name("<gold><bold>" + Text.escape(name))
+                        .lore(lore);
                 guiItem.action(p -> runCommand(p, "kit " + name));
+            } else {
+                guiItem = tile(ForgeIcons.TILE_GRAY,
+                        "<gray><bold>" + Text.escape(name), lore, p -> {});
             }
             set(slots[i], guiItem);
+        }
+
+        if (names.isEmpty()) {
+            set(22, tile(ForgeIcons.TILE_GRAY, "<gray>No kits available",
+                    List.of("<dark_gray>Ask an admin to create one."), p -> {}));
         }
     }
 
@@ -112,5 +125,4 @@ public final class KitGui extends WebGui {
         }
         return sb.toString();
     }
-
 }

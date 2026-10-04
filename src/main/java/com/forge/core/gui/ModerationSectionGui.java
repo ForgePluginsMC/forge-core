@@ -1,6 +1,7 @@
 package com.forge.core.gui;
 
 import com.forge.core.ForgeCore;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import org.bukkit.entity.Player;
@@ -9,15 +10,32 @@ import org.jspecify.annotations.Nullable;
 
 /**
  * Moderation section: punishments, player info, management.
+ *
+ * <p>Glyph-rendered: button art is baked into the title glyph; slots hold
+ * invisible click targets with tooltips.
  */
 @NullMarked
-public final class ModerationSectionGui extends WebGui {
+public final class ModerationSectionGui extends GlyphGui {
+    /** PUA glyphs for moderation pages 1-3. */
+    private static final String[] GLYPHS = {"\uE10C", "\uE10D", "\uE10E"};
+
     private final ForgeCore plugin;
     private final WebGui parent;
+    private final int page;
 
     public ModerationSectionGui(ForgeCore plugin, WebGui parent) {
+        this(plugin, parent, 0);
+    }
+
+    public ModerationSectionGui(ForgeCore plugin, WebGui parent, int page) {
         this.plugin = plugin;
         this.parent = parent;
+        this.page = Math.max(0, page);
+    }
+
+    @Override
+    protected String glyphChar() {
+        return GLYPHS[Math.min(page, GLYPHS.length - 1)];
     }
 
     @Override
@@ -30,71 +48,71 @@ public final class ModerationSectionGui extends WebGui {
         return parent;
     }
 
+    /** A section button: short baked label, tooltip description, click action. */
+    private record SecButton(String label, String desc, Consumer<Player> action) {
+    }
+
+    private List<SecButton> buttons() {
+        List<SecButton> out = new ArrayList<>();
+        out.add(new SecButton("BAN", "Ban a player from the server",
+                p -> inputCmd(p, "Player to ban:", "ban")));
+        out.add(new SecButton("TEMPBAN", "Temporarily ban a player",
+                p -> inputCmd(p, "Player and duration (e.g. Steve 1d):", "tempban")));
+        out.add(new SecButton("KICK", "Kick a player",
+                p -> inputCmd(p, "Player to kick:", "kick")));
+        out.add(new SecButton("MUTE", "Mute a player's chat",
+                p -> inputCmd(p, "Player to mute:", "mute")));
+        out.add(new SecButton("WARN", "Issue a warning",
+                p -> inputCmd(p, "Player and reason:", "warn")));
+        out.add(new SecButton("BAN IP", "Ban an IP address",
+                p -> inputCmd(p, "IP or player:", "banip")));
+        out.add(new SecButton("JAIL", "Jail a player",
+                p -> inputCmd(p, "Player to jail:", "jail")));
+        out.add(new SecButton("PLAYERS", "View and manage players",
+                p -> new PlayerListGui(plugin, this).open(p)));
+        out.add(new SecButton("INFO", "Check player details",
+                p -> inputCmd(p, "Player name:", "seen")));
+        out.add(new SecButton("CHECK BAN", "Check ban status",
+                p -> inputCmd(p, "Player name:", "checkban")));
+        out.add(new SecButton("BAN LIST", "View and manage bans",
+                p -> new BanListGui(plugin, this).open(p)));
+        out.add(new SecButton("UNBAN", "Unban a player",
+                p -> inputCmd(p, "Player to unban:", "unban")));
+        out.add(new SecButton("UNMUTE", "Unmute a player",
+                p -> inputCmd(p, "Player to unmute:", "unmute")));
+        out.add(new SecButton("VANISH", "Toggle invisibility",
+                p -> runCmd(p, "vanish")));
+        out.add(new SecButton("SPY", "Monitor private messages",
+                p -> runCmd(p, "socialspy")));
+        out.add(new SecButton("CLEARCHAT", "Clear public chat",
+                p -> runCmd(p, "clearchat")));
+        return out;
+    }
+
     @Override
     protected void buildContent(Player viewer) {
-        // Punishments
-        set(10, cmdCard("Ban Player", ForgeIcons.BUTTON_DANGER,
-                "Ban a player from the server",
-                p -> inputCmd(p, "Player to ban:", "ban")));
-        set(11, cmdCard("Temp Ban", ForgeIcons.BUTTON_DANGER,
-                "Temporarily ban a player",
-                p -> inputCmd(p, "Player and duration (e.g. Steve 1d):", "tempban")));
-        set(12, cmdCard("Kick Player", ForgeIcons.BUTTON_DANGER,
-                "Kick a player",
-                p -> inputCmd(p, "Player to kick:", "kick")));
-        set(13, cmdCard("Mute Player", ForgeIcons.BUTTON_DANGER,
-                "Mute a player's chat",
-                p -> inputCmd(p, "Player to mute:", "mute")));
-        set(14, cmdCard("Warn Player", ForgeIcons.BUTTON_DANGER,
-                "Issue a warning",
-                p -> inputCmd(p, "Player and reason:", "warn")));
-        set(15, cmdCard("Ban IP", ForgeIcons.BUTTON_DANGER,
-                "Ban an IP address",
-                p -> inputCmd(p, "IP or player:", "banip")));
-        set(16, cmdCard("Jail Player", ForgeIcons.BUTTON_DANGER,
-                "Jail a player",
-                p -> inputCmd(p, "Player to jail:", "jail")));
-
-        // Player Info
-        set(19, card("Online Players", ForgeIcons.STATUS_ONLINE,
-                "View and manage players",
-                p -> new PlayerListGui(plugin, this).open(p)));
-        set(20, cmdCard("Player Info", ForgeIcons.ICON_TOOLS,
-                "Check player details",
-                p -> inputCmd(p, "Player name:", "seen")));
-        set(21, cmdCard("Check Ban", ForgeIcons.ICON_TOOLS,
-                "Check ban status",
-                p -> inputCmd(p, "Player name:", "checkban")));
-
-        // Management
-        set(23, card("Ban List", ForgeIcons.BUTTON_DANGER,
-                "View and manage bans",
-                p -> new BanListGui(plugin, this).open(p)));
-        set(24, cmdCard("Unban", ForgeIcons.BUTTON_SUCCESS,
-                "Unban a player",
-                p -> inputCmd(p, "Player to unban:", "unban")));
-        set(25, cmdCard("Unmute", ForgeIcons.BUTTON_SUCCESS,
-                "Unmute a player",
-                p -> inputCmd(p, "Player to unmute:", "unmute")));
-
-        // Tools
-        set(28, cmdCard("Vanish", ForgeIcons.BUTTON_SECONDARY,
-                "Toggle invisibility",
-                p -> runCmd(p, "vanish")));
-        set(29, cmdCard("Social Spy", ForgeIcons.BUTTON_SECONDARY,
-                "Monitor private messages",
-                p -> runCmd(p, "socialspy")));
-        set(30, cmdCard("Clear Chat", ForgeIcons.BUTTON_SECONDARY,
-                "Clear public chat",
-                p -> runCmd(p, "clearchat")));
+        List<SecButton> all = buttons();
+        int start = page * 6;
+        for (int i = 0; i < 6 && start + i < all.size(); i++) {
+            SecButton b = all.get(start + i);
+            GuiItem item = ghostTip("<red><bold>" + b.label(),
+                    List.of("<gray>" + b.desc()), b.action());
+            for (int slot : CARD_SLOTS[i]) {
+                set(slot, item);
+            }
+        }
     }
 
-    private GuiItem card(String name, String icon, String desc, Consumer<Player> action) {
-        return GuiItem.card(icon, "<gold><bold>" + name, desc).action(action);
-    }
-
-    private GuiItem cmdCard(String name, String icon, String desc, Consumer<Player> action) {
-        return GuiItem.card(icon, "<red><bold>" + name, desc).action(action);
+    @Override
+    protected void buildFooter(Player viewer) {
+        super.buildFooter(viewer);
+        int totalPages = (buttons().size() + 5) / 6;
+        if (page > 0) {
+            set(SLOT_PREV, ghost(p -> new ModerationSectionGui(plugin, parent, page - 1).open(p)));
+        }
+        if (page < totalPages - 1) {
+            set(SLOT_NEXT, ghost(p -> new ModerationSectionGui(plugin, parent, page + 1).open(p)));
+        }
     }
 
     private void runCmd(Player p, String cmd) {

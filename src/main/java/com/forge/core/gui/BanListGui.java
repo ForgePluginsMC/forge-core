@@ -8,19 +8,17 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 /**
  * Ban list: click a ban to unban.
+ *
+ * <p>Glyph-rendered background with bright button tiles.
  */
 @NullMarked
-public final class BanListGui extends WebGui {
-    private static final MiniMessage MM = MiniMessage.miniMessage();
+public final class BanListGui extends GlyphGui {
     private static final DateTimeFormatter FMT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
             .withZone(ZoneId.systemDefault());
     private final ForgeCore plugin;
@@ -29,6 +27,11 @@ public final class BanListGui extends WebGui {
     public BanListGui(ForgeCore plugin, WebGui parent) {
         this.plugin = plugin;
         this.parent = parent;
+    }
+
+    @Override
+    protected String glyphChar() {
+        return "\uE115";
     }
 
     @Override
@@ -44,7 +47,6 @@ public final class BanListGui extends WebGui {
     @Override
     protected void buildContent(Player viewer) {
         List<BanManager.BanInfo> bans = new ArrayList<>(plugin.bans().all());
-        // Filter out expired temp bans.
         bans.removeIf(BanManager.BanInfo::expired);
 
         int[] slots = CONTENT_SLOTS;
@@ -61,17 +63,14 @@ public final class BanListGui extends WebGui {
             }
             lore.add("");
             lore.add("<green>Click to unban");
-            set(slots[i], GuiItem.of(Material.BARRIER)
-                    .name("<red>" + Text.escape(ban.name()))
-                    .lore(lore)
-                    .action(p -> runCommand(p, "unban " + ban.name())));
+            set(slots[i], tile(ForgeIcons.TILE_RED,
+                    "<red><bold>" + Text.escape(ban.name()), lore,
+                    p -> runCommand(p, "unban " + ban.name())));
         }
 
         if (bans.isEmpty()) {
-            set(22, GuiItem.of(Material.LIME_DYE)
-                    .name("<green>No active bans")
-                    .lore("<gray>Everyone is behaving."));
+            set(22, tile(ForgeIcons.TILE_GREEN, "<green><bold>No active bans",
+                    List.of("<gray>Everyone is behaving."), p -> {}));
         }
     }
-
 }

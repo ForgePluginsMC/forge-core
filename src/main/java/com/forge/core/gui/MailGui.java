@@ -4,27 +4,29 @@ import com.forge.core.ForgeCore;
 import com.forge.core.cmd.playerb.MailManager;
 import com.forge.core.cmd.playerb.PlayerBState;
 import com.forge.core.util.Text;
-import java.util.ArrayList;
 import java.util.List;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 /**
  * Mail inbox: click a message to read it, buttons to clear and compose.
+ *
+ * <p>Glyph-rendered background with bright button tiles.
  */
 @NullMarked
-public final class MailGui extends WebGui {
-    private static final MiniMessage MM = MiniMessage.miniMessage();
+public final class MailGui extends GlyphGui {
     private final ForgeCore plugin;
     private final WebGui parent;
 
     public MailGui(ForgeCore plugin, WebGui parent) {
         this.plugin = plugin;
         this.parent = parent;
+    }
+
+    @Override
+    protected String glyphChar() {
+        return "\uE114";
     }
 
     @Override
@@ -48,23 +50,30 @@ public final class MailGui extends WebGui {
             String preview = msg.message().length() > 30
                     ? msg.message().substring(0, 30) + "..."
                     : msg.message();
-            set(slots[i], GuiItem.of(Material.PAPER)
-                    .name("<yellow>From: <white>" + Text.escape(msg.from()))
-                    .lore(
-                            "<gray>" + Text.escape(preview),
-                            "",
-                            "<green>Click to read full message")
-                    .action(p -> {
+            set(slots[i], tile(ForgeIcons.TILE_YELLOW,
+                    "<yellow><bold>From: <white>" + Text.escape(msg.from()),
+                    List.of("<gray>" + Text.escape(preview),
+                            "", "<green>Click to read full message"),
+                    p -> {
                         p.closeInventory();
                         Text.send(p, "<yellow><bold>From " + Text.escape(msg.from()) + ":");
                         Text.send(p, "<white>" + Text.escape(msg.message()));
                     }));
         }
 
-        set(47, GuiItem.of(Material.WRITABLE_BOOK)
-                .name("<green>Compose Mail")
-                .lore("<gray>Send mail to a player.", "", "<yellow>Click to enter recipient")
-                .action(p -> {
+        if (messages.isEmpty()) {
+            set(22, tile(ForgeIcons.TILE_GRAY, "<gray>Inbox empty",
+                    List.of("<dark_gray>No messages."), p -> {}));
+        }
+    }
+
+    @Override
+    protected void buildFooter(Player viewer) {
+        super.buildFooter(viewer);
+        set(47, tile(ForgeIcons.TILE_GREEN, "<green><bold>Compose",
+                List.of("<gray>Send mail to a player.",
+                        "", "<yellow>Click to enter recipient"),
+                p -> {
                     p.closeInventory();
                     Text.send(p, "<yellow>Type the recipient's name (or 'cancel'):");
                     ChatInput.request(p, recipient -> {
@@ -82,10 +91,9 @@ public final class MailGui extends WebGui {
                         });
                     });
                 }));
-        set(49, GuiItem.of(Material.BARRIER)
-                .name("<red>Clear Inbox")
-                .lore("<gray>Delete all messages.", "", "<red>Click to clear")
-                .action(p -> runCommand(p, "mail clear")));
+        set(51, tile(ForgeIcons.TILE_RED, "<red><bold>Clear",
+                List.of("<gray>Delete all messages.",
+                        "", "<red>Click to clear"),
+                p -> runCommand(p, "mail clear")));
     }
-
 }

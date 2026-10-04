@@ -56,8 +56,13 @@ public abstract class ForgeGui implements InventoryHolder {
         items.put(slot, item);
     }
 
+    /** Set the item at a slot only if no item is already there. */
+    protected final void setIfAbsent(int slot, GuiItem item) {
+        items.putIfAbsent(slot, item);
+    }
+
     /** Fill empty slots with a decorative pane. */
-    protected final void fillEmpty() {
+    protected void fillEmpty() {
         GuiItem filler = GuiItem.of(Material.BLACK_STAINED_GLASS_PANE).name(" ");
         for (int i = 0; i < size(); i++) {
             items.putIfAbsent(i, filler);

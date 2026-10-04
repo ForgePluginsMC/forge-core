@@ -562,6 +562,48 @@
           "type": "minecraft:model",
           "model": "minecraft:item/forge/forge_invisible"
         }
+      },
+      {
+        "when": "forge_tile_base",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_tile_base"
+        }
+      },
+      {
+        "when": "forge_tile_green",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_tile_green"
+        }
+      },
+      {
+        "when": "forge_tile_gold",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_tile_gold"
+        }
+      },
+      {
+        "when": "forge_tile_yellow",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_tile_yellow"
+        }
+      },
+      {
+        "when": "forge_tile_gray",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_tile_gray"
+        }
+      },
+      {
+        "when": "forge_tile_red",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_tile_red"
+        }
       }
     ],
     "fallback": {

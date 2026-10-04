@@ -1,6 +1,7 @@
 package com.forge.core.gui;
 
 import com.forge.core.ForgeCore;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import org.bukkit.entity.Player;
@@ -9,15 +10,32 @@ import org.jspecify.annotations.Nullable;
 
 /**
  * Economy section: personal finance, shops, admin.
+ *
+ * <p>Glyph-rendered: button art is baked into the title glyph; slots hold
+ * invisible click targets with tooltips.
  */
 @NullMarked
-public final class EconomySectionGui extends WebGui {
+public final class EconomySectionGui extends GlyphGui {
+    /** PUA glyphs for economy pages 1-2. */
+    private static final String[] GLYPHS = {"\uE108", "\uE109"};
+
     private final ForgeCore plugin;
     private final WebGui parent;
+    private final int page;
 
     public EconomySectionGui(ForgeCore plugin, WebGui parent) {
+        this(plugin, parent, 0);
+    }
+
+    public EconomySectionGui(ForgeCore plugin, WebGui parent, int page) {
         this.plugin = plugin;
         this.parent = parent;
+        this.page = Math.max(0, page);
+    }
+
+    @Override
+    protected String glyphChar() {
+        return GLYPHS[Math.min(page, GLYPHS.length - 1)];
     }
 
     @Override
@@ -30,58 +48,61 @@ public final class EconomySectionGui extends WebGui {
         return parent;
     }
 
+    /** A section button: short baked label, tooltip description, click action. */
+    private record SecButton(String label, String desc, Consumer<Player> action) {
+    }
+
+    private List<SecButton> buttons() {
+        List<SecButton> out = new ArrayList<>();
+        out.add(new SecButton("BALANCE", "Check your balance",
+                p -> runCmd(p, "balance")));
+        out.add(new SecButton("PAY", "Send money to someone",
+                p -> inputCmd(p, "Player and amount (e.g. Steve 100):", "pay")));
+        out.add(new SecButton("BALTOP", "Richest players",
+                p -> runCmd(p, "baltop")));
+        out.add(new SecButton("SELL", "Sell held item",
+                p -> runCmd(p, "sell hand")));
+        out.add(new SecButton("WORTH", "Check item value",
+                p -> runCmd(p, "worth")));
+        out.add(new SecButton("PRICES", "Browse item prices",
+                p -> runCmd(p, "worthlist")));
+        out.add(new SecButton("CHEQUE", "Create a money cheque",
+                p -> inputCmd(p, "Amount:", "cheque")));
+        out.add(new SecButton("KITS", "Claim free kits",
+                p -> new KitGui(plugin, this).open(p)));
+        out.add(new SecButton("ECO GIVE", "Admin: give money",
+                p -> inputCmd(p, "Player and amount:", "eco give")));
+        out.add(new SecButton("ECO TAKE", "Admin: take money",
+                p -> inputCmd(p, "Player and amount:", "eco take")));
+        out.add(new SecButton("SET WORTH", "Admin: set item price",
+                p -> inputCmd(p, "Price:", "setworth")));
+        return out;
+    }
+
     @Override
     protected void buildContent(Player viewer) {
-        // Personal
-        set(10, cmdCard("Balance", ForgeIcons.ICON_ECONOMY,
-                "Check your balance",
-                p -> runCmd(p, "balance")));
-        set(11, cmdCard("Pay Player", ForgeIcons.BUTTON_SUCCESS,
-                "Send money to someone",
-                p -> inputCmd(p, "Player and amount (e.g. Steve 100):", "pay")));
-        set(12, cmdCard("Top Balances", ForgeIcons.ICON_ECONOMY,
-                "Richest players",
-                p -> runCmd(p, "baltop")));
-
-        // Shop
-        set(14, cmdCard("Sell Item", ForgeIcons.BUTTON_SUCCESS,
-                "Sell held item",
-                p -> runCmd(p, "sell hand")));
-        set(15, cmdCard("Item Worth", ForgeIcons.ICON_ECONOMY,
-                "Check item value",
-                p -> runCmd(p, "worth")));
-        set(16, cmdCard("Price List", ForgeIcons.ICON_ECONOMY,
-                "Browse item prices",
-                p -> runCmd(p, "worthlist")));
-
-        // Cheques
-        set(19, cmdCard("Write Cheque", ForgeIcons.ICON_MAIL,
-                "Create a money cheque",
-                p -> inputCmd(p, "Amount:", "cheque")));
-
-        // Kits (economy-adjacent)
-        set(21, card("Kits", ForgeIcons.ICON_KIT,
-                "Claim free kits",
-                p -> new KitGui(plugin, this).open(p)));
-
-        // Admin
-        set(23, cmdCard("Give Money", ForgeIcons.BUTTON_SUCCESS,
-                "Admin: give money",
-                p -> inputCmd(p, "Player and amount:", "eco give")));
-        set(24, cmdCard("Take Money", ForgeIcons.BUTTON_DANGER,
-                "Admin: take money",
-                p -> inputCmd(p, "Player and amount:", "eco take")));
-        set(25, cmdCard("Set Worth", ForgeIcons.BUTTON_SECONDARY,
-                "Admin: set item price",
-                p -> inputCmd(p, "Price:", "setworth")));
+        List<SecButton> all = buttons();
+        int start = page * 6;
+        for (int i = 0; i < 6 && start + i < all.size(); i++) {
+            SecButton b = all.get(start + i);
+            GuiItem item = ghostTip("<gold><bold>" + b.label(),
+                    List.of("<gray>" + b.desc()), b.action());
+            for (int slot : CARD_SLOTS[i]) {
+                set(slot, item);
+            }
+        }
     }
 
-    private GuiItem card(String name, String icon, String desc, Consumer<Player> action) {
-        return GuiItem.card(icon, "<gold><bold>" + name, desc).action(action);
-    }
-
-    private GuiItem cmdCard(String name, String icon, String desc, Consumer<Player> action) {
-        return GuiItem.card(icon, "<yellow><bold>" + name, desc).action(action);
+    @Override
+    protected void buildFooter(Player viewer) {
+        super.buildFooter(viewer);
+        int totalPages = (buttons().size() + 5) / 6;
+        if (page > 0) {
+            set(SLOT_PREV, ghost(p -> new EconomySectionGui(plugin, parent, page - 1).open(p)));
+        }
+        if (page < totalPages - 1) {
+            set(SLOT_NEXT, ghost(p -> new EconomySectionGui(plugin, parent, page + 1).open(p)));
+        }
     }
 
     private void runCmd(Player p, String cmd) {

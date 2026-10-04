@@ -5,8 +5,6 @@ import com.forge.core.util.Text;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -17,16 +15,22 @@ import org.jspecify.annotations.Nullable;
 
 /**
  * Online player list: click a head for quick actions.
+ *
+ * <p>Glyph-rendered background; player heads kept as meaningful icons.
  */
 @NullMarked
-public final class PlayerListGui extends WebGui {
-    private static final MiniMessage MM = MiniMessage.miniMessage();
+public final class PlayerListGui extends GlyphGui {
     private final ForgeCore plugin;
     private final WebGui parent;
 
     public PlayerListGui(ForgeCore plugin, WebGui parent) {
         this.plugin = plugin;
         this.parent = parent;
+    }
+
+    @Override
+    protected String glyphChar() {
+        return "\uE10F";
     }
 
     @Override
@@ -49,8 +53,12 @@ public final class PlayerListGui extends WebGui {
             Player target = players.get(i);
             set(slots[i], playerItem(viewer, target));
         }
-    }
 
+        if (players.isEmpty()) {
+            set(22, tile(ForgeIcons.TILE_GRAY, "<gray>No players online",
+                    List.of("<dark_gray>You're all alone."), p -> {}));
+        }
+    }
 
     private GuiItem playerItem(Player viewer, Player target) {
         ItemStack head = new ItemStack(Material.PLAYER_HEAD);
@@ -59,7 +67,7 @@ public final class PlayerListGui extends WebGui {
         head.setItemMeta(meta);
 
         GuiItem item = GuiItem.from(head)
-                .name("<aqua>" + Text.escape(target.getName()))
+                .name("<aqua><bold>" + Text.escape(target.getName()))
                 .lore(
                         "<gray>Level: <white>" + target.getLevel(),
                         "<gray>Gamemode: <white>" + target.getGameMode().name().toLowerCase(),
