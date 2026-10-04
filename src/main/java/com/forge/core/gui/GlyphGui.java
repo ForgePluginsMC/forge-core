@@ -51,10 +51,10 @@ public abstract class GlyphGui extends WebGui {
      * 81 back, 83 prev, 84 page info, 85 next, 88 close.
      */
     protected static final int HOTBAR_BACK = 81;
-    protected static final int HOTBAR_PREV = 83;
-    protected static final int HOTBAR_PAGE = 84;
-    protected static final int HOTBAR_NEXT = 85;
-    protected static final int HOTBAR_CLOSE = 88;
+    protected static final int HOTBAR_PREV = 84;
+    protected static final int HOTBAR_PAGE = 85;
+    protected static final int HOTBAR_NEXT = 86;
+    protected static final int HOTBAR_CLOSE = 89;
 
     @Override
     protected Component title() {
@@ -64,6 +64,11 @@ public abstract class GlyphGui extends WebGui {
     @Override
     protected void buildHeader(Player viewer) {
         // Header is baked into the title glyph.
+    }
+
+    @Override
+    protected void addBackButton() {
+        // No-op: back button is in the hotbar via buildFooter().
     }
 
     /**

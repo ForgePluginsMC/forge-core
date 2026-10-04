@@ -141,14 +141,14 @@ public final class HubGui extends GlyphGui {
         HubGui self = this;
         // Back (if parent) and Close via standard hotbar nav.
         super.buildFooter(viewer);
-        // Mail button in hotbar.
-        set(82, GuiItem.of(Material.PAPER)
+        // Mail button far left in hotbar.
+        set(81, GuiItem.of(Material.PAPER)
                 .model(ForgeIcons.ICON_MAIL)
                 .name("<aqua><bold>Mail")
                 .lore("<gray>Read your messages.")
                 .action(p -> new MailGui(plugin, self).open(p)));
-        // Online players button in hotbar.
-        set(86, GuiItem.of(Material.PLAYER_HEAD)
+        // Online players button next to mail.
+        set(82, GuiItem.of(Material.PLAYER_HEAD)
                 .name("<green><bold>Online Players")
                 .lore("<gray>View online players.")
                 .action(p -> new PlayerListGui(plugin, self).open(p)));
