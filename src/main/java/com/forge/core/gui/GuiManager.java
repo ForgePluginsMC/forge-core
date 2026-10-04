@@ -139,8 +139,15 @@ public final class GuiManager implements Listener {
 
     @EventHandler
     public void onClose(InventoryCloseEvent event) {
-        if (event.getView().getTopInventory().getHolder() instanceof ForgeGui.Tag
+        if (event.getView().getTopInventory().getHolder() instanceof ForgeGui.Tag tag
                 && event.getPlayer() instanceof Player player) {
+            ForgeGui closed = tag.gui;
+            // Only handle close if this is the currently tracked GUI.
+            // Opening a new GUI fires close for the old one synchronously —
+            // don't untrack the new GUI.
+            if (open.get(player.getUniqueId()) != closed) {
+                return;
+            }
             open.remove(player.getUniqueId());
             // Delay restore by a tick: opening another GUI fires close first,
             // and we don't want to restore between chained opens.
