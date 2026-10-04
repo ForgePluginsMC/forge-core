@@ -43,4 +43,39 @@ public final class ForgeIcons {
     public static final String ICON_HOME = "forge_icon_home";
     public static final String ICON_KIT = "forge_icon_kit";
     public static final String ICON_MAIL = "forge_icon_mail";
+
+    /** Card piece positions for 3-wide card illustrations. */
+    public enum CardPiece {
+        LEFT("l"),
+        MIDDLE("m"),
+        RIGHT("r");
+
+        private final String suffix;
+
+        CardPiece(String suffix) {
+            this.suffix = suffix;
+        }
+    }
+
+    /**
+     * Custom model data key for a card illustration piece.
+     *
+     * @param category card category (e.g. "teleport")
+     * @param piece which third of the illustration
+     * @return the model key, e.g. "forge_card_teleport_art_l"
+     */
+    public static String cardArt(String category, CardPiece piece) {
+        return "forge_card_" + category + "_art_" + piece.suffix;
+    }
+
+    /**
+     * Custom model data key for a card label bar piece.
+     *
+     * @param category card category (e.g. "teleport")
+     * @param piece which third of the label bar
+     * @return the model key, e.g. "forge_card_teleport_label_l"
+     */
+    public static String cardLabel(String category, CardPiece piece) {
+        return "forge_card_" + category + "_label_" + piece.suffix;
+    }
 }

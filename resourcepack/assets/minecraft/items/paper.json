@@ -177,6 +177,384 @@
           "type": "minecraft:model",
           "model": "minecraft:item/forge/forge_icon_mail"
         }
+      },
+      {
+        "when": "forge_card_teleport_art_l",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_teleport_art_l"
+        }
+      },
+      {
+        "when": "forge_card_teleport_art_m",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_teleport_art_m"
+        }
+      },
+      {
+        "when": "forge_card_teleport_art_r",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_teleport_art_r"
+        }
+      },
+      {
+        "when": "forge_card_teleport_label_l",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_teleport_label_l"
+        }
+      },
+      {
+        "when": "forge_card_teleport_label_m",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_teleport_label_m"
+        }
+      },
+      {
+        "when": "forge_card_teleport_label_r",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_teleport_label_r"
+        }
+      },
+      {
+        "when": "forge_card_moderation_art_l",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_moderation_art_l"
+        }
+      },
+      {
+        "when": "forge_card_moderation_art_m",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_moderation_art_m"
+        }
+      },
+      {
+        "when": "forge_card_moderation_art_r",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_moderation_art_r"
+        }
+      },
+      {
+        "when": "forge_card_moderation_label_l",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_moderation_label_l"
+        }
+      },
+      {
+        "when": "forge_card_moderation_label_m",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_moderation_label_m"
+        }
+      },
+      {
+        "when": "forge_card_moderation_label_r",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_moderation_label_r"
+        }
+      },
+      {
+        "when": "forge_card_economy_art_l",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_economy_art_l"
+        }
+      },
+      {
+        "when": "forge_card_economy_art_m",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_economy_art_m"
+        }
+      },
+      {
+        "when": "forge_card_economy_art_r",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_economy_art_r"
+        }
+      },
+      {
+        "when": "forge_card_economy_label_l",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_economy_label_l"
+        }
+      },
+      {
+        "when": "forge_card_economy_label_m",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_economy_label_m"
+        }
+      },
+      {
+        "when": "forge_card_economy_label_r",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_economy_label_r"
+        }
+      },
+      {
+        "when": "forge_card_player_art_l",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_player_art_l"
+        }
+      },
+      {
+        "when": "forge_card_player_art_m",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_player_art_m"
+        }
+      },
+      {
+        "when": "forge_card_player_art_r",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_player_art_r"
+        }
+      },
+      {
+        "when": "forge_card_player_label_l",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_player_label_l"
+        }
+      },
+      {
+        "when": "forge_card_player_label_m",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_player_label_m"
+        }
+      },
+      {
+        "when": "forge_card_player_label_r",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_player_label_r"
+        }
+      },
+      {
+        "when": "forge_card_guilds_art_l",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_guilds_art_l"
+        }
+      },
+      {
+        "when": "forge_card_guilds_art_m",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_guilds_art_m"
+        }
+      },
+      {
+        "when": "forge_card_guilds_art_r",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_guilds_art_r"
+        }
+      },
+      {
+        "when": "forge_card_guilds_label_l",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_guilds_label_l"
+        }
+      },
+      {
+        "when": "forge_card_guilds_label_m",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_guilds_label_m"
+        }
+      },
+      {
+        "when": "forge_card_guilds_label_r",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_guilds_label_r"
+        }
+      },
+      {
+        "when": "forge_card_quests_art_l",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_quests_art_l"
+        }
+      },
+      {
+        "when": "forge_card_quests_art_m",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_quests_art_m"
+        }
+      },
+      {
+        "when": "forge_card_quests_art_r",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_quests_art_r"
+        }
+      },
+      {
+        "when": "forge_card_quests_label_l",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_quests_label_l"
+        }
+      },
+      {
+        "when": "forge_card_quests_label_m",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_quests_label_m"
+        }
+      },
+      {
+        "when": "forge_card_quests_label_r",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_quests_label_r"
+        }
+      },
+      {
+        "when": "forge_card_warps_art_l",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_warps_art_l"
+        }
+      },
+      {
+        "when": "forge_card_warps_art_m",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_warps_art_m"
+        }
+      },
+      {
+        "when": "forge_card_warps_art_r",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_warps_art_r"
+        }
+      },
+      {
+        "when": "forge_card_warps_label_l",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_warps_label_l"
+        }
+      },
+      {
+        "when": "forge_card_warps_label_m",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_warps_label_m"
+        }
+      },
+      {
+        "when": "forge_card_warps_label_r",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_warps_label_r"
+        }
+      },
+      {
+        "when": "forge_card_homes_art_l",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_homes_art_l"
+        }
+      },
+      {
+        "when": "forge_card_homes_art_m",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_homes_art_m"
+        }
+      },
+      {
+        "when": "forge_card_homes_art_r",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_homes_art_r"
+        }
+      },
+      {
+        "when": "forge_card_homes_label_l",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_homes_label_l"
+        }
+      },
+      {
+        "when": "forge_card_homes_label_m",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_homes_label_m"
+        }
+      },
+      {
+        "when": "forge_card_homes_label_r",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_homes_label_r"
+        }
+      },
+      {
+        "when": "forge_card_kits_art_l",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_kits_art_l"
+        }
+      },
+      {
+        "when": "forge_card_kits_art_m",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_kits_art_m"
+        }
+      },
+      {
+        "when": "forge_card_kits_art_r",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_kits_art_r"
+        }
+      },
+      {
+        "when": "forge_card_kits_label_l",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_kits_label_l"
+        }
+      },
+      {
+        "when": "forge_card_kits_label_m",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_kits_label_m"
+        }
+      },
+      {
+        "when": "forge_card_kits_label_r",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/forge/forge_card_kits_label_r"
+        }
       }
     ],
     "fallback": {
